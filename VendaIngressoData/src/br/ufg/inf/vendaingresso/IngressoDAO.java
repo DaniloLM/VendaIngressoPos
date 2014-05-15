@@ -1,6 +1,7 @@
 package br.ufg.inf.vendaingresso;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
@@ -11,4 +12,5 @@ public interface IngressoDAO {
     public ResultSet getVendidosTotal();
     public ResultSet getVendidosSecao(Secao secao, Evento evento);
     public ResultSet getVendidosEvento(Evento evento);
+    public List<Ingresso> getIngressoDisponiveis(Evento evento);
 }

@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,10 @@ public class IngressoDAOImpl implements IngressoDAO{
     private PreparedStatement ps = null; 
     private ResultSet rs = null;
     
+    /**
+     * Metodo para inserir o ingresso no banco
+     * @param ingresso
+     */
     @Override
     public void salvar(Ingresso ingresso){
         try {
@@ -39,10 +45,13 @@ public class IngressoDAOImpl implements IngressoDAO{
             close();
         }
     }
-
+    
+    /**
+     * Metodo para contar o total de ingressos vendidos
+     * @return rs
+     */
     @Override
-    public ResultSet getVendidosTotal() {
-       
+    public ResultSet getVendidosTotal() { 
         try{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT COUNT(*) "
@@ -62,7 +71,13 @@ public class IngressoDAOImpl implements IngressoDAO{
             return rs; 
         } 
     }
-
+    
+    /**
+     * Metodo para contar o total de vendidos por secao do evento
+     * @param secao
+     * @param evento
+     * @return rs
+     */
     @Override
     public ResultSet getVendidosSecao(Secao secao, Evento evento) {
         try {
@@ -90,7 +105,12 @@ public class IngressoDAOImpl implements IngressoDAO{
             return rs;
         }
     }
-
+    
+    /**
+     * Metodo para contar o total de ingressos vendidos por evento 
+     * @param evento
+     * @return rs
+     */
     @Override
     public ResultSet getVendidosEvento(Evento evento) {
         try {
@@ -114,6 +134,41 @@ public class IngressoDAOImpl implements IngressoDAO{
         } finally {
             close();
             return rs;
+        }
+    }
+    
+    /**
+     * Metodo para listar os ingressos disponiveis por evento 
+     * @param evento
+     * @return ingressos
+     */
+    @Override
+    public List<Ingresso> getIngressoDisponiveis(Evento evento){
+        List<Ingresso> ingresso = new ArrayList<>();
+        try{
+            conn = ConnectionFactory.getConnection();
+            String sql = "SELECT * "
+                       + "FROM ingresso "
+                       + "WHERE idcompra IS NULL"
+                       + "AND evento LIKE \'?\'";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, evento.getNome());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Ingresso ingressolido = new Ingresso();
+                ingressolido.setId(rs.getLong(1));
+                ingresso.add(ingressolido);
+            }
+        } catch (SQLException e){
+            throw new RuntimeException("Erro " + e.getSQLState()
+                                           + " ao atualizar o objeto: " 
+                                           + e.getLocalizedMessage());
+        } catch (ClassNotFoundException e){
+            throw new RuntimeException("Erro ao conectar ao banco: "
+                                         + e.getMessage());
+        } finally{
+            close();
+            return ingresso;  
         }
     }
 

@@ -7,6 +7,7 @@ package br.ufg.inf.vendaingresso;
 public class Secao {
     private long id;
     private String nome;
+    private double valor;
 
     public Secao(long id, String nome) {
         this.id = id;
@@ -27,5 +28,13 @@ public class Secao {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 }

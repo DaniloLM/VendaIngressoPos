@@ -1,4 +1,4 @@
-package br.com.inf.vendaingresso.utils;
+package br.ufg.inf.vendaingresso.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

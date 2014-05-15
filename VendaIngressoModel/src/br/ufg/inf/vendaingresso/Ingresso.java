@@ -6,10 +6,8 @@ package br.ufg.inf.vendaingresso;
  */
 public class Ingresso {
     private long id;
-    private double valor;
 
-    public Ingresso(double valor) {
-        this.valor = valor;
+    public Ingresso() {
     }
 
     public long getId() {
@@ -18,13 +16,5 @@ public class Ingresso {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
     }
 }

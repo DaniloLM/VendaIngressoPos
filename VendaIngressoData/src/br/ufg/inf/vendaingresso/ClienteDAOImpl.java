@@ -45,6 +45,7 @@ public class ClienteDAOImpl implements ClienteDAO{
 
     @Override
     public Cliente getByCpf(String cpf) {
+        Cliente clienteLido = null;
         try{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT id "
@@ -53,6 +54,15 @@ public class ClienteDAOImpl implements ClienteDAO{
             ps = conn.prepareStatement(sql);
             ps.setString(1, cpf);
             rs = ps.executeQuery();
+            if(rs.next()){
+                clienteLido = new Cliente();
+                clienteLido.setId(rs.getLong("id"));
+                clienteLido.setNome(rs.getString("nome"));
+                clienteLido.setCpf(rs.getString("cpf"));
+            }else{
+                close();
+                throw new RuntimeException("Usuário não encontrado");
+            }
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -62,7 +72,7 @@ public class ClienteDAOImpl implements ClienteDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return rs; 
+            return clienteLido; 
         } 
     }
     

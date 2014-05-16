@@ -25,8 +25,34 @@ public class CompraDAOImpl implements CompraDAO{
     private ResultSet rs = null;
     
     @Override
-    public void salvar(Compra compra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void salvar(Compra compra, Cliente cliente, Funcionario funcionario) {
+        try{
+            conn = ConnectionFactory.getConnection();
+            String sql = "INSERT INTO compra " 
+                       + "VALUES ( ?"
+                       +         ",SYSDATE"
+                       +         ",(SELECT id "
+                       +             "FROM cliente "
+                       +            "WHERE cpf LIKE \'?\')"
+                       +         ",(SELECT id "
+                       +             "FROM funcionario "
+                       +            "WHERE cpf LIKE \'?\'));";
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, compra.getId());
+            ps.setString(2, cliente.getCpf());
+            ps.setString(3, funcionario.getCpf());
+            ps.executeUpdate();
+        } catch (SQLException e){
+            throw new RuntimeException("Erro " 
+                                     + e.getSQLState()
+                                     + " ao atualizar o objeto: "
+                                     + e.getLocalizedMessage());
+        } catch (ClassNotFoundException e){
+            throw new RuntimeException("Erro ao conectar no banco: "
+                                     + e.getMessage());     
+        } finally {
+            close();
+        }
     }
     
     /**
@@ -76,6 +102,14 @@ public class CompraDAOImpl implements CompraDAO{
             ps = conn.prepareStatement(sql);
             ps.setString(1, funcionario.getNome());
             rs = ps.executeQuery();
+            if(rs.next()){
+                Compra compra = new Compra(); 
+                compra.setId(rs.getLong("id"));
+                compra.setDataCompra(rs.getDate("datacompra"));
+            } else {
+                close();
+                throw new RuntimeException("Compra não encontrada!");
+            }
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 

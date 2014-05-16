@@ -61,7 +61,7 @@ public class ClienteDAOImpl implements ClienteDAO{
                 clienteLido.setCpf(rs.getString("cpf"));
             }else{
                 close();
-                throw new RuntimeException("Usuário não encontrado");
+                throw new RuntimeException("Cliente não encontrado!");
             }
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()

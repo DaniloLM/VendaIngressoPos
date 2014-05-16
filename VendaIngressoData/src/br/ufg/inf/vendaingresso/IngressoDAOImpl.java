@@ -59,6 +59,12 @@ public class IngressoDAOImpl implements IngressoDAO{
                        +  "WHERE idcompra IS NOT NULL;";
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery();
+            if (rs.next()) {
+               return rs;  
+            } else {
+                close(); 
+                throw new RuntimeException("Não existem ingressos vendidos!"); 
+            }
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -68,7 +74,6 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return rs; 
         } 
     }
     
@@ -93,6 +98,12 @@ public class IngressoDAOImpl implements IngressoDAO{
             ps.setString(1, evento.getNome());
             ps.setString(2, secao.getNome());
             rs = ps.executeQuery();  
+            if (rs.next()){
+                return rs; 
+            } else {
+                close();
+                throw new RuntimeException("Não existem ingressos vendidos para a secao do evento!");
+            }
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -102,7 +113,6 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return rs;
         }
     }
     
@@ -123,7 +133,13 @@ public class IngressoDAOImpl implements IngressoDAO{
                         +     "AND e.nome LIKE \' ? \';";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
-            rs = ps.executeQuery();  
+            rs = ps.executeQuery(); 
+            if(rs.next()){
+                return rs; 
+            } else {
+                close();
+                throw new RuntimeException("Não existem ingressos vendidos para o evento!");
+            }
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -156,9 +172,10 @@ public class IngressoDAOImpl implements IngressoDAO{
             rs = ps.executeQuery();
             while (rs.next()) {
                 Ingresso ingressolido = new Ingresso();
-                ingressolido.setId(rs.getLong(1));
+                ingressolido.setId(rs.getLong("id"));
                 ingresso.add(ingressolido);
             }
+            return ingresso; 
         } catch (SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -168,7 +185,6 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage());
         } finally{
             close();
-            return ingresso;  
         }
     }
 

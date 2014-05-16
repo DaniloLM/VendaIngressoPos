@@ -1,6 +1,6 @@
 package br.ufg.inf.vendaingresso;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -8,7 +8,7 @@ import java.util.Calendar;
  */
 public class Compra {
     private long id;
-    private Calendar dataCompra;
+    private Date dataCompra;
 
     public long getId() {
         return id;
@@ -18,11 +18,11 @@ public class Compra {
         this.id = id;
     }
 
-    public Calendar getDataCompra() {
+    public Date getDataCompra() {
         return dataCompra;
     }
 
-    public void setDataCompra(Calendar dataCompra) {
+    public void setDataCompra(Date dataCompra) {
         this.dataCompra = dataCompra;
     }
 }

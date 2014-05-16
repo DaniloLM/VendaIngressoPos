@@ -150,7 +150,7 @@ public class IngressoDAOImpl implements IngressoDAO{
             String sql = "SELECT * "
                        + "FROM ingresso "
                        + "WHERE idcompra IS NULL"
-                       + "AND evento LIKE \'?\'";
+                       + "AND evento LIKE \'?\';";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery();

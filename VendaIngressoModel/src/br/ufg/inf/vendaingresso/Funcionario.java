@@ -7,11 +7,13 @@ package br.ufg.inf.vendaingresso;
 public class Funcionario {
     private long id;
     private String nome;
+    private String cpf; 
     private String login;
     private String senha;
 
-    public Funcionario(String nome, String login, String senha) {
+    public Funcionario(String nome, String cpf, String login, String senha) {
         this.nome = nome;
+        this.cpf = cpf; 
         this.login = login;
         this.senha = senha;
     }
@@ -46,5 +48,13 @@ public class Funcionario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+    
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

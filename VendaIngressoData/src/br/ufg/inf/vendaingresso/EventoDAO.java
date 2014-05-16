@@ -6,5 +6,4 @@ package br.ufg.inf.vendaingresso;
  */
 public interface EventoDAO {
     public void salvar(Evento evento);
-    public void getByNome(String nome);
 }

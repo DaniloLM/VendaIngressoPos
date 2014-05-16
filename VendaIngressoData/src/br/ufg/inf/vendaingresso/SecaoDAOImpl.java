@@ -29,7 +29,7 @@ public class SecaoDAOImpl implements SecaoDAO{
         try {
             conn = ConnectionFactory.getConnection(); 
             String sql = "INSERT INTO secao (id, nome, valor) "
-                       +            "VALUES (?, \'?\', ?)";
+                       +            "VALUES (?, \'?\', ?);";
             ps = conn.prepareStatement(sql);
             ps.setLong(1, secao.getId());
             ps.setString(2, secao.getNome());

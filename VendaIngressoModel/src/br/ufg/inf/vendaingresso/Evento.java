@@ -1,6 +1,6 @@
 package br.ufg.inf.vendaingresso;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -9,9 +9,9 @@ import java.util.Calendar;
 public class Evento {
     private long id;
     private String nome;
-    private Calendar dataEvento;
+    private Date dataEvento;
 
-    public Evento(String nome, Calendar dataEvento) {
+    public Evento(String nome, Date dataEvento) {
         this.nome = nome;
         this.dataEvento = dataEvento;
     }
@@ -32,11 +32,11 @@ public class Evento {
         this.nome = nome;
     }
 
-    public Calendar getDataEvento() {
+    public Date getDataEvento() {
         return dataEvento;
     }
 
-    public void setDataEvento(Calendar dataEvento) {
+    public void setDataEvento(Date dataEvento) {
         this.dataEvento = dataEvento;
     }
 }

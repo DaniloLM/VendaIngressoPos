@@ -73,7 +73,8 @@ public class CompraDAOImpl implements CompraDAO{
                        +   "FROM compra c"
                        +   "JOIN funcionario f ON c.idfuncionario = f.idfuncionario "
                        +  "WHERE f.nome LIKE \'?\';";
-            ps = conn.prepareStatement(sql); 
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, funcionario.getNome());
             rs = ps.executeQuery();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()

@@ -47,7 +47,7 @@ public class IngressoDAOImpl implements IngressoDAO{
             ps.setLong(1, ingresso.getId());
             ps.setString(2, secao.getNome());
             ps.setString(3, evento.getNome());
-            ps.setString(4, evento.getNome());
+            ps.setString(4, cliente.getCpf());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

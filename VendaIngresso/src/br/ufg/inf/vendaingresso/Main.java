@@ -1,8 +1,8 @@
-package vendaingressoexec;
+package br.ufg.inf.vendaingresso;
 
 import java.util.Scanner;
 
-public class VendaIngressoExec {
+public class Main {
 
     static int conta_vendas;
     static double caixa;
@@ -101,7 +101,9 @@ public class VendaIngressoExec {
         System.exit(0);
     }
 
-    //OPÇÕES DO MENU "VENDAS"
+    /*
+    * OPÇÕES DO MENU "VENDAS"
+    */
     public static void venderingresso() {
 
     }

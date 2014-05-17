@@ -18,15 +18,18 @@ public class FuncionarioDAOImpl implements FuncionarioDAO{
     private PreparedStatement ps = null;
 
     @Override
-    public void salvar(Funcionario funcionario) {
+    public void salvar(Funcionario funcionario, Acesso acesso) {
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO funcionario (id, nome, dataevento) " 
-                       +             "VALUES (?, \'?\',\'?\');";
+            String sql = "INSERT INTO funcionario (id, nome, login, senha, idacesso, cpf)"
+                    + " VALUES (?, \'?\', \'?\', \'?\', (SELECT id FROM acesso WHERE tipo LIKE '?'), \'?\');";
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, evento.getId());
-            ps.setString(2, evento.getNome());
-            ps.setDate(3, (Date) evento.getDataEvento()); 
+            ps.setLong(1, funcionario.getId());
+            ps.setString(2, funcionario.getNome());
+            ps.setString(3, funcionario.getLogin());
+            ps.setString(4, funcionario.getSenha());
+            ps.setLong(5, acesso.getId());
+            ps.setString(6, funcionario.getCpf());
             ps.executeUpdate();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()

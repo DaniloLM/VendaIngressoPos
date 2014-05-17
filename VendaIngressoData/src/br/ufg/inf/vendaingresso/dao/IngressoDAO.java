@@ -1,5 +1,6 @@
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao;
 
+import br.ufg.inf.vendaingresso.*;
 import java.sql.ResultSet;
 import java.util.List;
 

@@ -1,5 +1,7 @@
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao.impl;
 
+import br.ufg.inf.vendaingresso.dao.SecaoDAO;
+import br.ufg.inf.vendaingresso.Secao;
 import br.ufg.inf.vendaingresso.utils.*;
         
 import java.sql.Connection;

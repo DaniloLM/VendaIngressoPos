@@ -1,4 +1,6 @@
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao;
+
+import br.ufg.inf.vendaingresso.Cliente;
 
 /**
  *

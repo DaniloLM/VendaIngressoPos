@@ -1,5 +1,8 @@
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao.impl;
 
+import br.ufg.inf.vendaingresso.dao.FuncionarioDAO;
+import br.ufg.inf.vendaingresso.Acesso;
+import br.ufg.inf.vendaingresso.Funcionario;
 import br.ufg.inf.vendaingresso.utils.*;
 
 import java.sql.Connection;
@@ -7,30 +10,28 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 /**
  *
- * @author frederico
+ * @author danilolopesdemoraes
  */
-public class EventoDAOImpl implements EventoDAO {
-
+public class FuncionarioDAOImpl implements FuncionarioDAO{
+    
     private Connection conn = null;
     private Statement statement = null;
     private PreparedStatement ps = null;
 
-    /**
-     * Metodo para inserir um evento no banco
-     * @param evento 
-     */
     @Override
-    public void salvar(Evento evento) {
+    public void salvar(Funcionario funcionario, Acesso acesso) {
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO EVENTO (id, nome, dataevento) " 
-                       +             "VALUES (SELECT NVL(MAX(id),0)+1, \'?\',\'?\');";
-            ps = conn.prepareStatement(sql);            
-            ps.setString(2, evento.getNome());
-            ps.setDate(3, (Date) evento.getDataEvento()); 
+            String sql = "INSERT INTO funcionario (id, nome, login, senha, idacesso, cpf)"
+                    + " VALUES (SELECT NVL(MAX(id),0)+1, \'?\', \'?\', \'?\', (SELECT id FROM acesso WHERE tipo LIKE '?'), \'?\');";
+            ps = conn.prepareStatement(sql);           
+            ps.setString(2, funcionario.getNome());
+            ps.setString(3, funcionario.getLogin());
+            ps.setString(4, funcionario.getSenha());
+            ps.setString(5, acesso.getTipo());
+            ps.setString(6, funcionario.getCpf());
             ps.executeUpdate();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
@@ -41,7 +42,7 @@ public class EventoDAOImpl implements EventoDAO {
                                          + e.getMessage()); 
         } finally {
             close();
-        } 
+        }
     }
     
     private void close() {
@@ -56,5 +57,4 @@ public class EventoDAOImpl implements EventoDAO {
             throw new RuntimeException("Erro ao fechar conexão!");
         }
     }
-
 }

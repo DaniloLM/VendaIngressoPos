@@ -1,5 +1,7 @@
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao.impl;
 
+import br.ufg.inf.vendaingresso.dao.AcessoDAO;
+import br.ufg.inf.vendaingresso.Acesso;
 import br.ufg.inf.vendaingresso.utils.ConnectionFactory;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -11,53 +13,27 @@ import java.sql.SQLException;
  *
  * @author danilolopesdemoraes
  */
-public class ClienteDAOImpl implements ClienteDAO{
+public class AcessoDAOImpl implements AcessoDAO{
     private Connection conn = null; 
     private Statement statement = null; 
     private PreparedStatement ps = null; 
     private ResultSet rs = null;
     
-    /**
-     * Método que salva um cliente.
-     * @param cliente 
-     */
     @Override
-    public void salvar(Cliente cliente) {
-        try {
-            conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO cliente (id, nome)"
-                                     + "VALUES (SELECT NVL(MAX(id),0)+1, \' ? \');";
-            ps = conn.prepareStatement(sql);           
-            ps.setString(2, cliente.getNome());
-            ps.executeUpdate();
-        } catch(SQLException e){
-            throw new RuntimeException("Erro " + e.getSQLState()
-                                       + " ao atualizar objeto: "
-                                       + e.getLocalizedMessage()); 
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Erro ao conectar no banco: "
-                                       + e.getMessage());
-        } finally {
-            close();
-        }
-    }
-
-    @Override
-    public Cliente getByCpf(String cpf) {
-        Cliente clienteLido = null;
+    public Acesso getByTipo(String tipo) {
+        Acesso acessoLido = null;
         try{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT * "
-                       +   "FROM cliente"
-                       +  "WHERE cpf LIKE \'?\';";
+                       +   "FROM acesso"
+                       +  "WHERE tipo LIKE \'?\';";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, cpf);
+            ps.setString(1, tipo);
             rs = ps.executeQuery();
             if(rs.next()){
-                clienteLido = new Cliente();
-                clienteLido.setId(rs.getLong("id"));
-                clienteLido.setNome(rs.getString("nome"));
-                clienteLido.setCpf(rs.getString("cpf"));
+                acessoLido = new Acesso();
+                acessoLido.setId(rs.getLong("id"));
+                acessoLido.setTipo(rs.getString("tipo"));
             }else{
                 close();
                 throw new RuntimeException("Cliente não encontrado!");
@@ -71,8 +47,8 @@ public class ClienteDAOImpl implements ClienteDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return clienteLido; 
-        } 
+            return acessoLido; 
+        }
     }
     
     private void close() {
@@ -90,4 +66,5 @@ public class ClienteDAOImpl implements ClienteDAO{
             throw new RuntimeException("Erro ao fechar conexão!");
         }
     }
+    
 }

@@ -4,8 +4,13 @@
  * and open the template in the editor.
  */
 
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao.impl;
 
+import br.ufg.inf.vendaingresso.dao.CompraDAO;
+import br.ufg.inf.vendaingresso.Cliente;
+import br.ufg.inf.vendaingresso.Compra;
+import br.ufg.inf.vendaingresso.Funcionario;
+import br.ufg.inf.vendaingresso.Secao;
 import br.ufg.inf.vendaingresso.utils.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

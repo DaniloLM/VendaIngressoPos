@@ -1,5 +1,7 @@
-package br.ufg.inf.vendaingresso;
+package br.ufg.inf.vendaingresso.dao.impl;
 
+import br.ufg.inf.vendaingresso.dao.EventoDAO;
+import br.ufg.inf.vendaingresso.Evento;
 import br.ufg.inf.vendaingresso.utils.*;
 
 import java.sql.Connection;
@@ -7,28 +9,30 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 /**
  *
- * @author danilolopesdemoraes
+ * @author frederico
  */
-public class FuncionarioDAOImpl implements FuncionarioDAO{
-    
+public class EventoDAOImpl implements EventoDAO {
+
     private Connection conn = null;
     private Statement statement = null;
     private PreparedStatement ps = null;
 
+    /**
+     * Metodo para inserir um evento no banco
+     * @param evento 
+     */
     @Override
-    public void salvar(Funcionario funcionario, Acesso acesso) {
+    public void salvar(Evento evento) {
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO funcionario (id, nome, login, senha, idacesso, cpf)"
-                    + " VALUES (SELECT NVL(MAX(id),0)+1, \'?\', \'?\', \'?\', (SELECT id FROM acesso WHERE tipo LIKE '?'), \'?\');";
-            ps = conn.prepareStatement(sql);           
-            ps.setString(2, funcionario.getNome());
-            ps.setString(3, funcionario.getLogin());
-            ps.setString(4, funcionario.getSenha());
-            ps.setString(5, acesso.getTipo());
-            ps.setString(6, funcionario.getCpf());
+            String sql = "INSERT INTO EVENTO (id, nome, dataevento) " 
+                       +             "VALUES (SELECT NVL(MAX(id),0)+1, \'?\',\'?\');";
+            ps = conn.prepareStatement(sql);            
+            ps.setString(2, evento.getNome());
+            ps.setDate(3, (Date) evento.getDataEvento()); 
             ps.executeUpdate();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
@@ -39,7 +43,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-        }
+        } 
     }
     
     private void close() {
@@ -54,4 +58,5 @@ public class FuncionarioDAOImpl implements FuncionarioDAO{
             throw new RuntimeException("Erro ao fechar conexão!");
         }
     }
+
 }

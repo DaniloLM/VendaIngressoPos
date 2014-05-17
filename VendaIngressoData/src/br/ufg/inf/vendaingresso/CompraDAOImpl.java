@@ -92,10 +92,11 @@ public class CompraDAOImpl implements CompraDAO{
     * @return rs
     */
     @Override
-    public ResultSet getById(Funcionario funcionario){
+    public Compra getById(Funcionario funcionario){
+        Compra compra = null;
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT idcompra "
+            String sql = "SELECT * "
                        +   "FROM compra c"
                        +   "JOIN funcionario f ON c.idfuncionario = f.idfuncionario "
                        +  "WHERE f.nome LIKE \'?\';";
@@ -103,7 +104,7 @@ public class CompraDAOImpl implements CompraDAO{
             ps.setString(1, funcionario.getNome());
             rs = ps.executeQuery();
             if(rs.next()){
-                Compra compra = new Compra(); 
+                compra = new Compra(); 
                 compra.setId(rs.getLong("id"));
                 compra.setDataCompra(rs.getDate("datacompra"));
             } else {
@@ -119,7 +120,7 @@ public class CompraDAOImpl implements CompraDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return rs; 
+            return compra; 
         } 
         
     }

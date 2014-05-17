@@ -9,5 +9,5 @@ import java.sql.ResultSet;
 public interface CompraDAO {
     public void salvar(Compra compra, Cliente cliente, Funcionario funcionario);
     public void remover(Compra compra, Funcionario funcionario);
-    public ResultSet getById(Funcionario funcionario);
+    public Compra getById(Funcionario funcionario);
 }

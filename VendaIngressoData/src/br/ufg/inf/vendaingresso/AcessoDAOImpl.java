@@ -24,7 +24,7 @@ public class AcessoDAOImpl implements AcessoDAO{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT * "
                        +   "FROM acesso"
-                       +  "WHERE cpf LIKE \'?\';";
+                       +  "WHERE tipo LIKE \'?\';";
             ps = conn.prepareStatement(sql);
             ps.setString(1, tipo);
             rs = ps.executeQuery();

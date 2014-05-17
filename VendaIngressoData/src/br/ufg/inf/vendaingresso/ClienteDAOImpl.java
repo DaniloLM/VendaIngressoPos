@@ -26,9 +26,8 @@ public class ClienteDAOImpl implements ClienteDAO{
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO cliente (id, nome)"
-                                     + "VALUES (?, \' ? \');";
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, cliente.getId());
+                                     + "VALUES (SELECT NVL(MAX(id),0)+1, \' ? \');";
+            ps = conn.prepareStatement(sql);           
             ps.setString(2, cliente.getNome());
             ps.executeUpdate();
         } catch(SQLException e){

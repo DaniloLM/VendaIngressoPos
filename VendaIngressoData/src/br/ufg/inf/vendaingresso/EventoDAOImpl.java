@@ -27,9 +27,8 @@ public class EventoDAOImpl implements EventoDAO {
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO EVENTO (id, nome, dataevento) " 
-                       +             "VALUES (?, \'?\',\'?\');";
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, evento.getId());
+                       +             "VALUES (SELECT NVL(MAX(id),0)+1, \'?\',\'?\');";
+            ps = conn.prepareStatement(sql);            
             ps.setString(2, evento.getNome());
             ps.setDate(3, (Date) evento.getDataEvento()); 
             ps.executeUpdate();

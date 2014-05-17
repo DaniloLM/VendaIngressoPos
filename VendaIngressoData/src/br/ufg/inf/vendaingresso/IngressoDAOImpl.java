@@ -32,7 +32,7 @@ public class IngressoDAOImpl implements IngressoDAO{
     public void salvar(Ingresso ingresso, Secao secao, Evento evento, Cliente cliente){
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO ingresso VALUES (? " 
+            String sql = "INSERT INTO ingresso VALUES (SELECT NVL(MAX(id),0)+1, " 
                        +                            ",(SELECT id " 
                        +                                "FROM secao " 
                        +                               "WHERE nome LIKE \'?\') " 
@@ -43,8 +43,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                        +                                "FROM compra " 
                        +                                "JOIN cliente ON compra.idcliente = cliente.id " 
                        +                               "WHERE cliente.cpf LIKE \'?\'));";
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, ingresso.getId());
+            ps = conn.prepareStatement(sql);            
             ps.setString(2, secao.getNome());
             ps.setString(3, evento.getNome());
             ps.setString(4, cliente.getCpf());

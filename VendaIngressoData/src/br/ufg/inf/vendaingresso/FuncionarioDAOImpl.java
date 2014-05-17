@@ -22,9 +22,8 @@ public class FuncionarioDAOImpl implements FuncionarioDAO{
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO funcionario (id, nome, login, senha, idacesso, cpf)"
-                    + " VALUES (?, \'?\', \'?\', \'?\', (SELECT id FROM acesso WHERE tipo LIKE '?'), \'?\');";
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, funcionario.getId());
+                    + " VALUES (SELECT NVL(MAX(id),0)+1, \'?\', \'?\', \'?\', (SELECT id FROM acesso WHERE tipo LIKE '?'), \'?\');";
+            ps = conn.prepareStatement(sql);           
             ps.setString(2, funcionario.getNome());
             ps.setString(3, funcionario.getLogin());
             ps.setString(4, funcionario.getSenha());

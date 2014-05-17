@@ -29,7 +29,7 @@ public class CompraDAOImpl implements CompraDAO{
         try{
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO compra " 
-                       + "VALUES (?"
+                       + "VALUES (SELECT NVL(MAX(id),0)+1,"
                        +         ",SYSDATE"
                        +         ",(SELECT id "
                        +             "FROM cliente "
@@ -41,8 +41,7 @@ public class CompraDAOImpl implements CompraDAO{
                        +             "FROM ingresso "
                        +             "JOIN secao ON ingresso.idsecao = secao.id "
                        +            "WHERE secao.nome LIKE \'?\'));";
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, compra.getId());
+            ps = conn.prepareStatement(sql);            
             ps.setString(2, cliente.getCpf());
             ps.setString(3, funcionario.getCpf());
             ps.setString(4, secao.getNome());

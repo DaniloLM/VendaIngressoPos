@@ -27,7 +27,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO{
             ps.setString(2, funcionario.getNome());
             ps.setString(3, funcionario.getLogin());
             ps.setString(4, funcionario.getSenha());
-            ps.setLong(5, acesso.getId());
+            ps.setString(5, acesso.getTipo());
             ps.setString(6, funcionario.getCpf());
             ps.executeUpdate();
         } catch (SQLException e){

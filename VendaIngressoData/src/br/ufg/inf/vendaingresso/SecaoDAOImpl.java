@@ -29,11 +29,10 @@ public class SecaoDAOImpl implements SecaoDAO{
         try {
             conn = ConnectionFactory.getConnection(); 
             String sql = "INSERT INTO secao (id, nome, valor) "
-                       +            "VALUES (?, \'?\', ?);";
+                       +            "VALUES (SELECT NVL(MAX(id),0)+1, \'?\', ? FROM secao);";
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, secao.getId());
-            ps.setString(2, secao.getNome());
-            ps.setDouble(3, secao.getValor());
+            ps.setString(1, secao.getNome());
+            ps.setDouble(2, secao.getValor());
             ps.executeUpdate();
         } catch (SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

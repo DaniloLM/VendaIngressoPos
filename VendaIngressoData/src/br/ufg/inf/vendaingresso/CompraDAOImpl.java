@@ -25,22 +25,27 @@ public class CompraDAOImpl implements CompraDAO{
     private ResultSet rs = null;
     
     @Override
-    public void salvar(Compra compra, Cliente cliente, Funcionario funcionario) {
+    public void salvar(Compra compra, Cliente cliente, Funcionario funcionario, Secao secao) {
         try{
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO compra " 
-                       + "VALUES ( ?"
+                       + "VALUES (?"
                        +         ",SYSDATE"
                        +         ",(SELECT id "
                        +             "FROM cliente "
                        +            "WHERE cpf LIKE \'?\')"
                        +         ",(SELECT id "
                        +             "FROM funcionario "
-                       +            "WHERE cpf LIKE \'?\'));";
+                       +            "WHERE cpf LIKE \'?\')"
+                       +         ",(SELECT ingresso.id "
+                       +             "FROM ingresso "
+                       +             "JOIN secao ON ingresso.idsecao = secao.id "
+                       +            "WHERE secao.nome LIKE \'?\'));";
             ps = conn.prepareStatement(sql);
             ps.setLong(1, compra.getId());
             ps.setString(2, cliente.getCpf());
             ps.setString(3, funcionario.getCpf());
+            ps.setString(4, secao.getNome());
             ps.executeUpdate();
         } catch (SQLException e){
             throw new RuntimeException("Erro " 

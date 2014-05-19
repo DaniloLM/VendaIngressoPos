@@ -1,3 +1,6 @@
-VendaIngressoData/nbproject/private/private.xml
-VendaIngressoModel/nbproject/private/private.xml
-/VendaIngresso/nbproject/private/
+/VendaIngressoService/build/
+*.properties
+VendaIngresso/nbproject/private/private.properties
+*.xml
+*/private.xml
+*/private.properties

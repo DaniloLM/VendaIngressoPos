@@ -6,13 +6,13 @@
 
 package br.ufg.inf.vendaingresso.service;
 
-import br.ufg.inf.vendaingresso.Cliente;
-
 /**
  *
  * @author Elton Ricelli
  */
-public interface ClienteService {
+public class RegraNegocioException extends RuntimeException{
     
-    public void salvar(Cliente cliente) throws RegraNegocioException;
+    public RegraNegocioException(String message){
+        super("Erro de regra de negócio:" + message);
+    }
 }

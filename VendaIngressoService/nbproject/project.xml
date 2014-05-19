@@ -20,6 +20,7 @@
                 <clean-target>clean</clean-target>
                 <id>jar</id>
             </reference>
+<<<<<<< HEAD
             <reference>
                 <foreign-project>VendaIngressoModel</foreign-project>
                 <artifact-type>jar</artifact-type>
@@ -28,6 +29,8 @@
                 <clean-target>clean</clean-target>
                 <id>jar</id>
             </reference>
+=======
+>>>>>>> 8f79b5da62e65ed62ca5767d2a1a1fbbd6338126
         </references>
     </configuration>
 </project>

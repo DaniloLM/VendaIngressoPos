@@ -24,7 +24,7 @@ public class AcessoDAOImpl implements AcessoDAO{
         Acesso acessoLido = null;
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT * "
+            String sql = "SELECT id "
                        +   "FROM acesso"
                        +  "WHERE tipo LIKE \'?\';";
             ps = conn.prepareStatement(sql);
@@ -32,7 +32,6 @@ public class AcessoDAOImpl implements AcessoDAO{
             rs = ps.executeQuery();
             if(rs.next()){
                 acessoLido = new Acesso();
-                acessoLido.setId(rs.getLong("id"));
                 acessoLido.setTipo(rs.getString("tipo"));
             }else{
                 close();

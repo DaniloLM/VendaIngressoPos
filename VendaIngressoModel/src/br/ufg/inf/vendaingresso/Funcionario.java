@@ -2,10 +2,9 @@ package br.ufg.inf.vendaingresso;
 
 /**
  *
- * @author aluno
+ * @author Danilo Lopes
  */
 public class Funcionario {
-    private long id;
     private String nome;
     private String cpf; 
     private String login;
@@ -16,14 +15,6 @@ public class Funcionario {
         this.cpf = cpf; 
         this.login = login;
         this.senha = senha;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNome() {

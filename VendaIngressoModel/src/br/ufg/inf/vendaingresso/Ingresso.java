@@ -2,7 +2,7 @@ package br.ufg.inf.vendaingresso;
 
 /**
  *
- * @author aluno
+ * @author Danilo Lopes
  */
 public class Ingresso {
     private long id;

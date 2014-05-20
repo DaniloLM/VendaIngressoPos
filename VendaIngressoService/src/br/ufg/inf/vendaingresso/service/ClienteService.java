@@ -7,6 +7,7 @@
 package br.ufg.inf.vendaingresso.service;
 
 import br.ufg.inf.vendaingresso.Cliente;
+import br.ufg.inf.vendaingresso.exception.SaveException;
 
 /**
  *
@@ -14,5 +15,5 @@ import br.ufg.inf.vendaingresso.Cliente;
  */
 public interface ClienteService {
     
-    public void salvar(Cliente cliente) throws RegraNegocioException;
+    public void cadastrarCliente(Cliente cliente) throws SaveException;
 }

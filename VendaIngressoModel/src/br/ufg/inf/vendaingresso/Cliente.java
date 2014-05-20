@@ -2,28 +2,19 @@ package br.ufg.inf.vendaingresso;
 
 /**
  *
- * @author aluno
+ * @author Danilo Lopes
  */
 public class Cliente {
     
-    private long id;
     private String nome;
     private String cpf;
-    
-    public Cliente() {
-    }
     
     public Cliente(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public Cliente() {
     }
 
     public String getNome() {

@@ -7,10 +7,11 @@
 package br.ufg.inf.vendaingresso.service.impl;
 
 import br.ufg.inf.vendaingresso.Cliente;
-import br.ufg.inf.vendaingresso.service.RegraNegocioException;
-import br.ufg.inf.vendaingresso.service.ClienteService;
 import br.ufg.inf.vendaingresso.dao.ClienteDAO;
 import br.ufg.inf.vendaingresso.dao.impl.ClienteDAOImpl;
+import br.ufg.inf.vendaingresso.exception.SaveException;
+import br.ufg.inf.vendaingresso.service.ClienteService;
+
 
 /**
  *
@@ -25,21 +26,21 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void salvar(Cliente cliente) throws RegraNegocioException{
-        verificaIntegridade(cliente);
+    public void cadastrarCliente(Cliente cliente) throws SaveException{
+        validate(cliente);
         clienteDAO.salvar(cliente);
         
     }
 
-    private void verificaIntegridade(Cliente cliente) {
+    private void validate(Cliente cliente) {
         if (cliente == null) {
-            throw new RegraNegocioException("Usuário não pode ser nulo");
+            throw new SaveException("Cliente não pode ser vazio.");
         } else {
             if (cliente.getNome() == null || cliente.getNome().equals("")) {
-                throw new RegraNegocioException("Nome de usuário inválido");
+                throw new SaveException("Nome não pode ser vazio.");
             } else {
-                if (cliente.getId() == null || cliente.getId().equals("")) {
-                    throw new RegraNegocioException("Id do Cliente inválido");
+                if (cliente.getCpf() == null || cliente.getCpf().equals("")) {
+                   throw new SaveException("CPF não pode ser vazio.");
                 }
             }
         }

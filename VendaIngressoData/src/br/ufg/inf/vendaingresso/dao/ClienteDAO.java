@@ -8,5 +8,5 @@ import br.ufg.inf.vendaingresso.Cliente;
  */
 public interface ClienteDAO {
     public void salvar(Cliente cliente);
-    public Cliente getByCpf(String cpf);
+    public Cliente getByCpf(Cliente cliente);
 }

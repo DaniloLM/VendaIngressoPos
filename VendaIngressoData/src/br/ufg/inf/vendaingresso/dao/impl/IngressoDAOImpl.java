@@ -95,16 +95,17 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @return rs
      */
     @Override
-    public ResultSet getVendidosTotal() { 
+    public int getVendidosTotal() {
+        int contador;
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT COUNT(*) "
+            String sql = "SELECT COUNT(*) AS vendidos"
                        +   "FROM ingressos "
                        +  "WHERE idcompra IS NOT NULL;";
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery();
             if (rs.next()) {
-               return rs;  
+               contador = rs.getInt("vendidos");
             } else {
                 close(); 
                 throw new RuntimeException("Não existem ingressos vendidos!"); 
@@ -118,6 +119,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
+            return contador;
         } 
     }
     

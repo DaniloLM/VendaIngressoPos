@@ -9,7 +9,7 @@ import java.util.List;
  * @author Ana Clara
  */
 public interface IngressoDAO {
-    public void salvar(Ingresso ingresso, Secao secao, Evento evento, Cliente cliente);
+    public void salvar(Ingresso ingresso, Secao secao, Evento evento);
     public ResultSet getVendidosTotal();
     public ResultSet getVendidosSecao(Secao secao, Evento evento);
     public ResultSet getVendidosEvento(Evento evento);

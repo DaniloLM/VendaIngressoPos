@@ -33,7 +33,7 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @param cliente
      */
     @Override
-    public void salvar(Ingresso ingresso, Secao secao, Evento evento, Cliente cliente){
+    public void salvar(Ingresso ingresso, Secao secao, Evento evento){
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO ingresso VALUES (SELECT NVL(MAX(id),0)+1, " 
@@ -42,15 +42,10 @@ public class IngressoDAOImpl implements IngressoDAO{
                        +                               "WHERE nome LIKE \'?\') " 
                        +                            ",(SELECT id " 
                        +                                "FROM evento "
-                       +                               "WHERE nome LIKE \'?\') " 
-                       +                            ",(SELECT compra.id " 
-                       +                                "FROM compra " 
-                       +                                "JOIN cliente ON compra.idcliente = cliente.id " 
-                       +                               "WHERE cliente.cpf LIKE \'?\'));";
+                       +                               "WHERE nome LIKE \'?\'));";
             ps = conn.prepareStatement(sql);            
-            ps.setString(2, secao.getNome());
-            ps.setString(3, evento.getNome());
-            ps.setString(4, cliente.getCpf());
+            ps.setString(1, secao.getNome());
+            ps.setString(2, evento.getNome());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

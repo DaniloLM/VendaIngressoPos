@@ -1,4 +1,3 @@
-
 package br.ufg.inf.vendaingresso.dao.impl;
 
 import br.ufg.inf.vendaingresso.dao.IngressoDAO;
@@ -17,7 +16,7 @@ import java.util.List;
 
 /**
  *
- * @author aluno
+ * @author Ana Clara
  */
 public class IngressoDAOImpl implements IngressoDAO{
     

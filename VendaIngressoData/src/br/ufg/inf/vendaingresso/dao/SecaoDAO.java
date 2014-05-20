@@ -4,7 +4,7 @@ import br.ufg.inf.vendaingresso.Secao;
 
 /**
  *
- * @author aluno
+ * @author Ana Clara
  */
 public interface SecaoDAO {
     public void salvar(Secao secao);

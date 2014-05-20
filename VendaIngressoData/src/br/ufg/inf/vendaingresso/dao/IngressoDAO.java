@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * @author aluno
+ * @author Ana Clara
  */
 public interface IngressoDAO {
     public void salvar(Ingresso ingresso, Secao secao, Evento evento, Cliente cliente);

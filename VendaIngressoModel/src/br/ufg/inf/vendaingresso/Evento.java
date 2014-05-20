@@ -4,24 +4,15 @@ import java.util.Date;
 
 /**
  *
- * @author aluno
+ * @author danilolopesdemoraes
  */
 public class Evento {
-    private long id;
     private String nome;
     private Date dataEvento;
 
     public Evento(String nome, Date dataEvento) {
         this.nome = nome;
         this.dataEvento = dataEvento;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNome() {

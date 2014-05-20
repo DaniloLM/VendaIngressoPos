@@ -4,7 +4,7 @@ import br.ufg.inf.vendaingresso.Evento;
 
 /**
  *
- * @author aluno
+ * @author Ana Clara
  */
 public interface EventoDAO {
     public void salvar(Evento evento);

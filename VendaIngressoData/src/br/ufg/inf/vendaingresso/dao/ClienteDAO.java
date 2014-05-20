@@ -4,7 +4,7 @@ import br.ufg.inf.vendaingresso.Cliente;
 
 /**
  *
- * @author aluno
+ * @author danilolopesdemoraes
  */
 public interface ClienteDAO {
     public void salvar(Cliente cliente);

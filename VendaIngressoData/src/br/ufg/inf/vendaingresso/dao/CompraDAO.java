@@ -7,7 +7,7 @@ import br.ufg.inf.vendaingresso.Secao;
 
 /**
  *
- * @author aluno
+ * @author Ana Clara
  */
 public interface CompraDAO {
     public void salvar(Compra compra, Cliente cliente, Funcionario funcionario, Secao secao);

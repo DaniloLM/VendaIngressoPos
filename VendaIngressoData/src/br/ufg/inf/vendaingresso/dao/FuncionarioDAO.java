@@ -4,7 +4,7 @@ import br.ufg.inf.vendaingresso.*;
 
 /**
  *
- * @author aluno
+ * @author Ana Clara
  */
 public interface FuncionarioDAO {
     public void salvar(Funcionario funcionario, Acesso acesso);

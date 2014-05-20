@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,6 +48,35 @@ public class IngressoDAOImpl implements IngressoDAO{
             ps = conn.prepareStatement(sql);            
             ps.setString(1, secao.getNome());
             ps.setString(2, evento.getNome());
+            ps.executeUpdate();
+        } catch(SQLException e){
+            throw new RuntimeException("Erro " + e.getSQLState()
+                                       + " ao atualizar objeto: "
+                                       + e.getLocalizedMessage()); 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Erro ao conectar no banco: "
+                                       + e.getMessage());
+        } finally {
+            close();
+        }
+    }
+    
+    /**
+     * Metodo para atualizar o idcompra do ingresso quando uma compra for realizada
+     * 
+     * @param cliente
+     */
+    @Override
+    public void atualizar(Cliente cliente){
+        try {
+            conn = ConnectionFactory.getConnection();
+            String sql = "UPDATE ingresso "
+                   +        "SET idcompra = (SELECT id"
+                   +                          "FROM compra "
+                   +                          "JOIN cliente ON compra.idcliente = cliente.id "
+                   +                         "WHERE cliente.cpf LIKE \'?\');";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, cliente.getCpf());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

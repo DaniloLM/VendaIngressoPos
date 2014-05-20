@@ -23,8 +23,15 @@ public class CompraDAOImpl implements CompraDAO{
     private PreparedStatement ps = null; 
     private ResultSet rs = null;
     
+   /**
+    * Metodo para inserir a compra no banco
+    * 
+    * @param cliente
+    * @param funcionario
+    * @param secao
+    */
     @Override
-    public void salvar(Compra compra, Cliente cliente, Funcionario funcionario, Secao secao) {
+    public void salvar(Cliente cliente, Funcionario funcionario, Secao secao) {
         try{
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO compra " 
@@ -41,9 +48,9 @@ public class CompraDAOImpl implements CompraDAO{
                        +             "JOIN secao ON ingresso.idsecao = secao.id "
                        +            "WHERE secao.nome LIKE \'?\'));";
             ps = conn.prepareStatement(sql);            
-            ps.setString(2, cliente.getCpf());
-            ps.setString(3, funcionario.getCpf());
-            ps.setString(4, secao.getNome());
+            ps.setString(1, cliente.getCpf());
+            ps.setString(2, funcionario.getCpf());
+            ps.setString(3, secao.getNome());
             ps.executeUpdate();
         } catch (SQLException e){
             throw new RuntimeException("Erro " 
@@ -60,22 +67,24 @@ public class CompraDAOImpl implements CompraDAO{
     
     /**
     * Metodo para remover uma compra pelo idcompra e nome do funcionario
-    * @param compra
+    * 
+    * @param cliente
     * @param funcionario
     */
     @Override
-    public void remover(Compra compra, Funcionario funcionario) {
+    public void remover(Cliente cliente, Funcionario funcionario) {
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "DELETE " 
-                       +   "FROM (SELECT idcompra " 
+                       +   "FROM (SELECT id " 
                        +           "FROM compra c " 
-                       +           "JOIN funcionario f ON c.idfuncionario = f.idfuncionario " 
-                       +           "WHERE idcompra = ? " 
-                       +             "AND f.nome LIKE \'?\');";
+                       +           "JOIN funcionario f ON c.idfuncionario = f.id " 
+                       +           "JOIN cliente ON c.idcliente = cliente.id"
+                       +          "WHERE cliente.cpf LIKE \'?\' " 
+                       +            "AND f.cpf LIKE \'?\');";
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, compra.getId());
-            ps.setString(2, funcionario.getNome());
+            ps.setString(1, cliente.getCpf());
+            ps.setString(2, funcionario.getCpf());
             ps.executeUpdate();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
@@ -91,20 +100,25 @@ public class CompraDAOImpl implements CompraDAO{
     
    /**
     * Metodo para retornar idcompra pelo funcionario
+    * 
+     * @param cliente
     * @param funcionario
-    * @return rs
+    * @return compra
     */
     @Override
-    public Compra getById(Funcionario funcionario){
+    public Compra getCompra(Cliente cliente, Funcionario funcionario){
         Compra compra = null;
         try{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT * "
                        +   "FROM compra c"
-                       +   "JOIN funcionario f ON c.idfuncionario = f.idfuncionario "
-                       +  "WHERE f.nome LIKE \'?\';";
+                       +   "JOIN funcionario f ON c.idfuncionario = f.id "
+                       +   "JOIN cliente ON c.idcliente = cliente.id"
+                       +  "WHERE cliente.cpf LIKE \'?\' "
+                       +    "AND f.cpf LIKE \'?\';";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, funcionario.getNome());
+            ps.setString(1, cliente.getCpf());
+            ps.setString(2, funcionario.getCpf());
             rs = ps.executeQuery();
             if(rs.next()){
                 compra = new Compra(); 

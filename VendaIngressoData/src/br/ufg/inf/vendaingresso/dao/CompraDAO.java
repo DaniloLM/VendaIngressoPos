@@ -10,7 +10,7 @@ import br.ufg.inf.vendaingresso.Secao;
  * @author Ana Clara
  */
 public interface CompraDAO {
-    public void salvar(Compra compra, Cliente cliente, Funcionario funcionario, Secao secao);
-    public void remover(Compra compra, Funcionario funcionario);
-    public Compra getById(Funcionario funcionario);
+    public void salvar(Cliente cliente, Funcionario funcionario, Secao secao);
+    public void remover(Cliente cliente, Funcionario funcionario);
+    public Compra getCompra(Cliente cliente, Funcionario funcionario);
 }

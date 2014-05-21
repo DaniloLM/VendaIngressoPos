@@ -96,8 +96,8 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @return count
      */
     @Override
-    public Integer getVendidosTotal() {
-        Integer count = 0;
+    public int getVendidosTotal() {
+        int count = 0;
         try{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT COUNT(*) AS vendidos"
@@ -131,7 +131,8 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @return rs
      */
     @Override
-    public ResultSet getVendidosSecao(Secao secao, Evento evento) {
+    public int getVendidosSecao(Secao secao, Evento evento) {
+        int count = 0;
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "SELECT COUNT(*) AS vendidos " 
@@ -146,7 +147,7 @@ public class IngressoDAOImpl implements IngressoDAO{
             ps.setString(2, secao.getNome());
             rs = ps.executeQuery();  
             if (rs.next()){
-                return rs; 
+                count = rs.getInt("vendidos");
             } else {
                 close();
                 throw new RuntimeException("Não existem ingressos vendidos para a secao do evento!");
@@ -160,6 +161,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
+            return count;
         }
     }
     
@@ -169,9 +171,9 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @return rs
      */
     @Override
-    public ResultSet getVendidosEvento(Evento evento) {
+    public int getVendidosEvento(Evento evento) {
+        int count = 0;
         try {
-           
             conn = ConnectionFactory.getConnection();
             String sql =   "SELECT COUNT(*) AS vendidos " 
                         +    "FROM ingresso i " 
@@ -182,7 +184,7 @@ public class IngressoDAOImpl implements IngressoDAO{
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery(); 
             if(rs.next()){
-                return rs; 
+                count = rs.getInt("vendidos");
             } else {
                 close();
                 throw new RuntimeException("Não existem ingressos vendidos para o evento!");
@@ -196,7 +198,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return rs;
+            return count;
         }
     }
     

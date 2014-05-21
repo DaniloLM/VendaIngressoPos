@@ -23,7 +23,6 @@ public class ClienteServiceImpl implements ClienteService {
     public void cadastrarCliente(Cliente cliente) throws SaveException{
         validate(cliente);
         clienteDAO.salvar(cliente);
-        
     }
 
     private void validate(Cliente cliente) {
@@ -34,7 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
                 throw new SaveException("Nome não pode ser vazio.");
             } else {
                 if (cliente.getCpf() == null || cliente.getCpf().equals("")) {
-                   throw new SaveException("CPF não pode ser vazio.");
+                   throw new SaveException("Senha não pode ser vazio.");
                 }
             }
         }

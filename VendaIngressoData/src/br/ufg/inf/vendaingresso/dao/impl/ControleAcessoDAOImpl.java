@@ -38,11 +38,7 @@ public class ControleAcessoDAOImpl implements ControleAcessoDAO {
             ps.setString(1, funcionario.getLogin());
             ps.setString(2, funcionario.getSenha());
             rs = ps.executeQuery();
-            if(rs.next()){
-                return true;
-            } else {
-                throw new RuntimeException("Login e/ou senha inválidos.");
-            }
+            return rs.next();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -73,11 +69,7 @@ public class ControleAcessoDAOImpl implements ControleAcessoDAO {
             ps = conn.prepareStatement(sql);
             ps.setString(1, funcionario.getCpf());
             rs = ps.executeQuery();
-            if(rs.next()){
-                return true;
-            } else {
-                throw new RuntimeException("Você não tem acesso para o programa.");
-            }
+            return rs.next();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 

@@ -92,11 +92,12 @@ public class IngressoDAOImpl implements IngressoDAO{
     
     /**
      * Metodo para contar o total de ingressos vendidos
-     * @return rs
+     * 
+     * @return count
      */
     @Override
-    public int getVendidosTotal() {
-        int contador;
+    public Integer getVendidosTotal() {
+        Integer count = 0;
         try{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT COUNT(*) AS vendidos"
@@ -105,7 +106,7 @@ public class IngressoDAOImpl implements IngressoDAO{
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery();
             if (rs.next()) {
-               contador = rs.getInt("vendidos");
+               count = rs.getInt("vendidos");
             } else {
                 close(); 
                 throw new RuntimeException("Não existem ingressos vendidos!"); 
@@ -119,7 +120,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return contador;
+            return count;
         } 
     }
     

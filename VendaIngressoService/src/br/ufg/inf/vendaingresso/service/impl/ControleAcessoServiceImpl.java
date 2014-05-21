@@ -1,9 +1,8 @@
 package br.ufg.inf.vendaingresso.service.impl;
 
 import br.ufg.inf.vendaingresso.Funcionario;
-import br.ufg.inf.vendaingresso.dao.FuncionarioDAO;
-import br.ufg.inf.vendaingresso.dao.impl.ControleAcesso;
-import br.ufg.inf.vendaingresso.dao.impl.FuncionarioDAOImpl;
+import br.ufg.inf.vendaingresso.dao.ControleAcessoDAO;
+import br.ufg.inf.vendaingresso.dao.impl.ControleAcessoDAOImpl;
 import br.ufg.inf.vendaingresso.exception.SaveException;
 import br.ufg.inf.vendaingresso.service.ControleAcessoService;
 
@@ -14,28 +13,32 @@ import br.ufg.inf.vendaingresso.service.ControleAcessoService;
  */
 public class ControleAcessoServiceImpl implements ControleAcessoService {
 
-    FuncionarioDAO funcionarioDAO;
+    ControleAcessoDAO controleacessoDAO;
+    
+    public ControleAcessoServiceImpl(){
+        controleacessoDAO = new ControleAcessoDAOImpl();
+    }
     
     @Override
-    public boolean login(String login, String senha) {
-        funcionarioDAO = new FuncionarioDAOImpl();
+    public boolean login(Funcionario funcionario) {
+        validate(funcionario);
+        return controleacessoDAO.login(funcionario);
     }
 
     @Override
     public boolean verificaAcesso(Funcionario funcionario) {
-        validate(funcionario);
-        funcionarioDAO.salvar(funcionario); 
+        return controleacessoDAO.verificaAcesso(funcionario);
     }
     
-     private void validate(Funcionario funcionario) {
+    private void validate(Funcionario funcionario) {
         if (funcionario == null) {
-            throw new SaveException("Funcionario não pode ser vazio.");
+            throw new SaveException("Funcionário não pode ser vazio.");
         } else {
             if (funcionario.getLogin() == null || funcionario.getLogin().equals("")) {
                 throw new SaveException("Login não pode ser vazio.");
             } else {
                 if (funcionario.getSenha() == null || funcionario.getSenha().equals("")) {
-                   throw new SaveException("Senha não pode ser vazio.");
+                   throw new SaveException("Senha não pode ser vazia.");
                 }
             }
         }

@@ -9,7 +9,7 @@ import br.ufg.inf.vendaingresso.Secao;
  */
 public interface RelatorioService {
     
-    public Integer contaIngressoTotal();
-    public Integer contaIngressoSecao(Evento evento, Secao secao);
-    public Integer contaIngressoEvento(Evento evento);
+    public int contaIngressoTotal();
+    public int contaIngressoSecao(Evento evento, Secao secao);
+    public int contaIngressoEvento(Evento evento);
 }

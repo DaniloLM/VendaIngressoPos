@@ -10,6 +10,10 @@ public class Funcionario {
     private String login;
     private String senha;
 
+    public Funcionario() {
+    
+    }
+    
     public Funcionario(String nome, String cpf, String login, String senha) {
         this.nome = nome;
         this.cpf = cpf; 

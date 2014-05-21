@@ -1,8 +1,7 @@
 package br.ufg.inf.vendaingresso.dao;
 
 import br.ufg.inf.vendaingresso.*;
-import java.sql.ResultSet;
-import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,5 +13,5 @@ public interface IngressoDAO {
     public int getVendidosTotal();
     public int getVendidosSecao(Secao secao, Evento evento);
     public int getVendidosEvento(Evento evento);
-    public List<Ingresso> getIngressoDisponiveis(Evento evento);
+    public Map<Ingresso, Secao> getIngressoDisponiveis(Evento evento);
 }

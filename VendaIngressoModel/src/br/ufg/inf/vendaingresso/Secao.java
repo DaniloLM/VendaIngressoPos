@@ -7,6 +7,10 @@ package br.ufg.inf.vendaingresso;
 public class Secao {
     private String nome;
     private double valor;
+    
+    public Secao(){
+        
+    }
 
     public Secao(String nome) {
         this.nome = nome;

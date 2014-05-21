@@ -1,10 +1,10 @@
 package br.ufg.inf.vendaingresso.dao.impl;
 
-import br.ufg.inf.vendaingresso.dao.IngressoDAO;
 import br.ufg.inf.vendaingresso.Cliente;
 import br.ufg.inf.vendaingresso.Evento;
 import br.ufg.inf.vendaingresso.Ingresso;
 import br.ufg.inf.vendaingresso.Secao;
+import br.ufg.inf.vendaingresso.dao.IngressoDAO;
 import br.ufg.inf.vendaingresso.utils.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -208,21 +210,26 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @return ingressos
      */
     @Override
-    public List<Ingresso> getIngressoDisponiveis(Evento evento){
-        List<Ingresso> ingresso = new ArrayList<>();
+    public Map<Ingresso, Secao> getIngressoDisponiveis(Evento evento){
+        Map<Ingresso,Secao> ingresso = new HashMap<>();
         try{
             conn = ConnectionFactory.getConnection();
-            String sql = "SELECT * "
-                       + "FROM ingresso "
-                       + "WHERE idcompra IS NULL"
-                       + "AND evento LIKE \'?\';";
+            String sql = "SELECT ingresso.id AS id " 
+                       + "      ,secao.nome AS nome "
+                       + "  FROM ingresso "
+                       + "  JOIN secao ON ingresso.idsecao = secao.id "
+                       + "  JOIN evento ON ingress.idevento = evento.id "
+                       + " WHERE ingresso.idcompra IS NULL"
+                       + "   AND evento.nome LIKE \'?\';";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery();
             while (rs.next()) {
                 Ingresso ingressolido = new Ingresso();
+                Secao secaolida = new Secao();
                 ingressolido.setId(rs.getLong("id"));
-                ingresso.add(ingressolido);
+                secaolida.setNome(rs.getString("nome"));
+                ingresso.put(ingressolido, secaolida);
             }
             return ingresso; 
         } catch (SQLException e){

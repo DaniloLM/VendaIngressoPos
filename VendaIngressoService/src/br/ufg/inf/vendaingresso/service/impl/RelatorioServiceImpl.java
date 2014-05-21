@@ -1,8 +1,6 @@
 package br.ufg.inf.vendaingresso.service.impl;
 
-import br.ufg.inf.vendaingresso.Cliente;
 import br.ufg.inf.vendaingresso.Evento;
-import br.ufg.inf.vendaingresso.Funcionario;
 import br.ufg.inf.vendaingresso.Secao;
 import br.ufg.inf.vendaingresso.dao.IngressoDAO;
 import br.ufg.inf.vendaingresso.dao.impl.IngressoDAOImpl;

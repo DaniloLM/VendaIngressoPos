@@ -1,18 +1,62 @@
 package br.ufg.inf.vendaingresso;
 
+import br.ufg.inf.vendaingresso.service.ControleAcessoService;
+import br.ufg.inf.vendaingresso.service.impl.ControleAcessoServiceImpl;
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
 
     static int conta_vendas;
     static double caixa;
+       
 
     public static void main(String args[]) {
-        System.out.println("###################################################################");
-        System.out.println("######################### SEJA BEM VINDO ##########################");
-        System.out.println("############## POR FAVOR INFORME OS DADOS SOLICITADOS #############");
-        System.out.println("###################################################################");
-        menuprincipal();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@inforplace.no-ip.org:1521:pos [pos em POS]","pos","pos#123");
+            java.sql.Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM cliente");
+            while(rs.next()) {
+               String nome =  rs.getString("nome");
+               System.out.println(nome);
+            }
+        }catch(ClassNotFoundException e) {
+           throw new RuntimeException("Erro ao conectar com o banco" + e.getMessage());
+        }catch(SQLException e) {
+            throw new RuntimeException("Erro de SQL" + e.getSQLState());
+        } finally {
+            System.out.println("Conexao finalizada....");
+        }
+        
+        
+        /**
+        ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
+        Funcionario funcionario = new Funcionario();
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("---------------------- VENDA DE INGRESSOS --------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Login: ");
+        String login = scanner.next();
+        funcionario.setLogin(login);
+        
+        System.out.print("Senha: ");
+        String senha = scanner.next();
+        funcionario.setSenha(senha);
+        
+        controleAcesso.login(funcionario);
+        
+        
+        // menuprincipal();
+        */
     }
 
     

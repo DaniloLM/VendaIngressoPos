@@ -27,10 +27,8 @@ public class ClienteDAOImpl implements ClienteDAO{
     public void salvar(Cliente cliente) {
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO cliente (id "
-                                           + ",nome"
-                                           + ",cpf)"
-                                    + "VALUES (SELECT NVL(MAX(id),0)+1, \'?\', \'?\');";
+            String sql = "INSERT INTO cliente (id, nome, cpf) "
+                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM cliente), ?, ?)";
             ps = conn.prepareStatement(sql);           
             ps.setString(1, cliente.getNome());
             ps.setString(2, cliente.getCpf());
@@ -52,9 +50,7 @@ public class ClienteDAOImpl implements ClienteDAO{
         Cliente clienteLido = null;
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT nome "
-                       +   "FROM cliente"
-                       +  "WHERE cpf LIKE \'?\';";
+            String sql = "SELECT nome FROM cliente WHERE cpf LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
             rs = ps.executeQuery();

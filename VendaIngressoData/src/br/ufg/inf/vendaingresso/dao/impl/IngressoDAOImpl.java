@@ -32,19 +32,15 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @param evento
      */
     @Override
-    public void salvar(Ingresso ingresso, Secao secao, Evento evento){
+    public void salvar(Secao secao){
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO ingresso VALUES (SELECT NVL(MAX(id),0)+1, " 
+            String sql = "INSERT INTO ingresso VALUES ((SELECT NVL(MAX(id),0)+1 FROM ingresso), " 
                        +                            ",(SELECT id " 
                        +                                "FROM secao " 
-                       +                               "WHERE nome LIKE \'?\') " 
-                       +                            ",(SELECT id " 
-                       +                                "FROM evento "
-                       +                               "WHERE nome LIKE \'?\'));";
+                       +                               "WHERE nome LIKE ?)";
             ps = conn.prepareStatement(sql);            
             ps.setString(1, secao.getNome());
-            ps.setString(2, evento.getNome());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()
@@ -71,7 +67,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                    +        "SET idcompra = (SELECT id"
                    +                          "FROM compra "
                    +                          "JOIN cliente ON compra.idcliente = cliente.id "
-                   +                         "WHERE cliente.cpf LIKE \'?\');";
+                   +                         "WHERE cliente.cpf LIKE ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
             ps.executeUpdate();
@@ -99,7 +95,7 @@ public class IngressoDAOImpl implements IngressoDAO{
             conn = ConnectionFactory.getConnection(); 
             String sql = "SELECT COUNT(*) AS vendidos"
                        +   "FROM ingressos "
-                       +  "WHERE idcompra IS NOT NULL;";
+                       +  "WHERE idcompra IS NOT NULL";
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -137,8 +133,8 @@ public class IngressoDAOImpl implements IngressoDAO{
                        +   "JOIN evento e on i.idevento = e.idevento "
                        +   "JOIN secao s on i.idsecao = s.idsecao "
                        +  "WHERE idcompra IS NOT NULL " 
-                       +    "AND e.nome LIKE \' ? \' "
-                       +    "AND s.nome LIKE \' ? \';";
+                       +    "AND e.nome LIKE ? "
+                       +    "AND s.nome LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             ps.setString(2, secao.getNome());
@@ -176,7 +172,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                         +    "FROM ingresso i " 
                         +    "JOIN evento e on i.idevento = e.idevento " 
                         +   "WHERE idcompra IS NOT NULL " 
-                        +     "AND e.nome LIKE \' ? \';";
+                        +     "AND e.nome LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery(); 
@@ -215,7 +211,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                        + "  JOIN secao ON ingresso.idsecao = secao.id "
                        + "  JOIN evento ON ingress.idevento = evento.id "
                        + " WHERE ingresso.idcompra IS NULL"
-                       + "   AND evento.nome LIKE \'?\';";
+                       + "   AND evento.nome LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery();

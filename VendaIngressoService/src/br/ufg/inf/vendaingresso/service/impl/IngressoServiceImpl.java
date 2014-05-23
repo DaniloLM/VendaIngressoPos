@@ -21,19 +21,17 @@ public class IngressoServiceImpl implements IngressoService{
     }
 
     @Override
-    public void cadastrarIngresso(Ingresso ingresso, Secao secao, Evento evento) {
-        validate(ingresso, secao, evento);
-        ingressoDAO.salvar(ingresso, secao, evento);
+    public void cadastrarIngresso(Secao secao) {
+        validate(secao);
+        ingressoDAO.salvar(secao);
     }
     
-    public void validate(Ingresso ingresso, Secao secao, Evento evento){
-        if(ingresso == null || evento.equals("")){
-            throw new SaveException("Ingresso não pode ser vazio.");
-        } else if (secao == null || secao.equals("")){
+    public void validate(Secao secao){
+        if (secao == null || secao.equals("")){
             throw new SaveException("Seção não pode ser vazia.");
         } else {
-            if(evento == null || evento.equals("")){
-                throw new SaveException("Evento não pode ser vazio.");
+            if(secao.getNome() == null || secao.getNome().equals("")){
+                throw new SaveException("Nome da seção não pode ser vazio.");
             }
         } 
     }

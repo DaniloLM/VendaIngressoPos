@@ -10,5 +10,5 @@ import br.ufg.inf.vendaingresso.Secao;
  */
 public interface IngressoService{
     
-    public void cadastrarIngresso(Ingresso ingresso, Secao secao, Evento evento); 
+    public void cadastrarIngresso(Secao secao); 
 }

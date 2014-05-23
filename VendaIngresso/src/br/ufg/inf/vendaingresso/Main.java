@@ -21,10 +21,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {     
 
-    public static void main(String args[]) throws ParseException {
+    public static void main(String args[]) {
         ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
         Funcionario funcionario = new Funcionario();
         
@@ -42,6 +44,8 @@ public class Main {
         String senha = scanner.next();
         funcionario.setSenha(senha);
         
+        System.out.println("--------------------------------------------------------------------");
+        
         boolean controle = controleAcesso.login(funcionario);
         
         if (controle){
@@ -49,7 +53,7 @@ public class Main {
         };
     }
     
-    public static void menuprincipal() throws ParseException {
+    public static void menuprincipal() {
         ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
         Funcionario funcionario = new Funcionario();        
         Scanner input = new Scanner(System.in);
@@ -57,7 +61,9 @@ public class Main {
         int sair = 0;
         while (sair != 6) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU");
+            System.out.println("------------------------ MENU PRINCIPAL ----------------------------");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
             System.out.println("(1) - REALIZAR VENDA");
             System.out.println("(2) - CADASTRAR CLIENTES");
             System.out.println("(3) - CADASTRAR EVENTOS");
@@ -104,13 +110,14 @@ public class Main {
         }
     }
     
-    public static void menuVendas() throws ParseException {
+    public static void menuVendas() {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
             System.out.println("--------------------------------------------------------------------");
             System.out.println("----------------------------- VENDAS -------------------------------");
             System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
             System.out.println("(1) - VENDER INGRESSO");
             System.out.println("(2) - CANCELAR VENDA");
             System.out.println("(3) - RECUPERAR VENDA");
@@ -214,13 +221,14 @@ public class Main {
         compra.cancelarCompra(cliente, funcionario);
     }
     
-    public static void menuClientes() throws ParseException {
+    public static void menuClientes() {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------- CLIENTES -------------------------------");
             System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
             System.out.println("(1) - CADASTRAR CLIENTE");
             System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
             System.out.println("(5) - SAIR");
@@ -246,7 +254,7 @@ public class Main {
         }
     }
     
-    public static void cadastrarCliente() throws ParseException{
+    public static void cadastrarCliente() {
         Cliente cliente = new Cliente();
         ClienteService clienteservice = new ClienteServiceImpl();
         
@@ -256,7 +264,7 @@ public class Main {
         String nome = input.next();
         cliente.setNome(nome);
         
-        System.out.println("CPF: ");
+        System.out.print("CPF: ");
         String cpf = input.next();
         cliente.setCpf(cpf);
         
@@ -266,16 +274,15 @@ public class Main {
     }
 
     
-    public static void menuEventos() throws ParseException {
+    public static void menuEventos() {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
             System.out.println("--------------------------------------------------------------------");
             System.out.println("----------------------------- EVENTOS ------------------------------");
             System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
             System.out.println("(1) - CADASTRAR EVENTO");
-            System.out.println("(2) - CADASTRAR SEÇÕES");
-            System.out.println("(3) - CADASTRAR INGRESSOS");
             System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
             System.out.println("(5) - SAIR");
             System.out.println("--------------------------------------------------------------------");
@@ -286,21 +293,11 @@ public class Main {
                     break;
                 }
                 case 2: {
-                    cadastrarSecao();
-                    break;
-                }
-                /*
-                case 3: {
-                    cadastrarIngresso();
-                    break;
-                }
-                */
-                case 4: {
                     retornarMenuPrincipal();
                     sair = 3;
                     break;
                 }
-                case 5: {
+                case 3: {
                     sair();
                     sair = 4;
                 }
@@ -310,50 +307,74 @@ public class Main {
         }
     }
     
-    public static void cadastrarEvento() throws ParseException{
+    public static void cadastrarEvento() {
         Evento evento = new Evento();
+        Ingresso ingresso = new Ingresso();
+        Secao secao = new Secao();
+        
         EventoService eventoservice = new EventoServiceImpl();
+        SecaoService secaoservice = new SecaoServiceImpl();
+        IngressoService ingressoservice = new IngressoServiceImpl();
+        
+        
         Scanner input = new Scanner(System.in);
         
-        System.out.println("Nome: ");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("------------------------ CADASTRAR EVENTOS -------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        
+        System.out.print("Nome: ");
         String nome = input.next();
         evento.setNome(nome);
         
-        System.out.println("Data: ");
-        String data = input.next();
+        System.out.print("Ano: ");
+        String ano = input.next();
         
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = dateFormat.parse(data);
-        evento.setDataEvento(date);
+        System.out.print("Mês: ");
+        String mes = input.next();
+        
+        System.out.print("Dia: ");
+        String dia = input.next();
+        
+        String data = ano + "/" + mes + "/" + dia;
+        evento.setDataEvento(data);
         
         eventoservice.cadastrarEvento(evento);
-        menuEventos();  
-    }
-    
-    public static void cadastrarSecao() throws ParseException{
-        SecaoService secaoservice = new SecaoServiceImpl();
-        Secao secao = new Secao();
-        Scanner input = new Scanner(System.in);
         
-        System.out.println("Nome: ");
-        String nome = input.next();
-        secao.setNome(nome);
+        System.out.println("Informe o número de seções do evento: ");
+        int countsecao = input.nextInt();
+        int i = 0; 
+        while(i<=countsecao){
+            System.out.print("Nome: ");
+            String nomesecao = input.next();
+            secao.setNome(nomesecao);
         
-        System.out.println("Valor: ");
-        Double valor = input.nextDouble();
-        secao.setValor(valor);
+            System.out.print("Valor: ");
+            Double valor = input.nextDouble();
+            secao.setValor(valor);
         
-        secaoservice.cadastrarSecao(secao);
+            secaoservice.cadastrarSecao(secao, evento);
+            
+            System.out.println("Número de ingressos da sessão: ");
+            int countingressos = input.nextInt();
+            int j = 0;
+            while(j<=countingressos){
+                ingressoservice.cadastrarIngresso(secao);
+            }
+            i++;
+        }
+        
         menuEventos();
     }
 
-    public static void menuFuncionarios() throws ParseException {
+    public static void menuFuncionarios() {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------- CLIENTES -------------------------------");
             System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
             System.out.println("(1) - CADASTRAR FUNCIONARIO");
             System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
             System.out.println("(3) - SAIR");
@@ -379,7 +400,7 @@ public class Main {
         }
     }
     
-    public static void cadastrarFuncionario() throws ParseException{
+    public static void cadastrarFuncionario() {
         Funcionario funcionario = new Funcionario();
         Acesso acesso = new Acesso();
         FuncionarioService funcionarioservice = new FuncionarioServiceImpl();
@@ -417,6 +438,7 @@ public class Main {
             System.out.println("--------------------------------------------------------------------");
             System.out.println("-------------------------- RELATÓRIOS ------------------------------");
             System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
             System.out.println("(1) - TOTAL DE INGRESSOS VENDIDOS");
             System.out.println("(2) - TOTAL DE INGRESSOS VENDIDOS POR SEÇÃO DO EVENTO");
             System.out.println("(3) - TOTAL DE INGRESSOS VENDIDOS POR EVENTO");
@@ -488,7 +510,7 @@ public class Main {
         relatorioservice.contaIngressoEvento(evento);
     }
     
-    public static void retornarMenuPrincipal() throws ParseException {
+    public static void retornarMenuPrincipal() {
         System.out.println("");
         System.out.println("");
         System.out.print("#MENU PRINCIPAL#");

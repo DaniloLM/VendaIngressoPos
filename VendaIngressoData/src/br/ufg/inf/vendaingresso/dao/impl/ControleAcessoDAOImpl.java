@@ -32,8 +32,8 @@ public class ControleAcessoDAOImpl implements ControleAcessoDAO {
             conn = ConnectionFactory.getConnection();
             String sql = "SELECT nome "
                        + "  FROM funcionario "
-                       + " WHERE login = \'?\' "
-                       + "   AND senha = \'?\';";
+                       + " WHERE login = ? "
+                       + "   AND senha = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, funcionario.getLogin());
             ps.setString(2, funcionario.getSenha());
@@ -65,7 +65,7 @@ public class ControleAcessoDAOImpl implements ControleAcessoDAO {
                        + "  FROM funcionario "
                        + "  JOIN acesso ON funcionario.idacesso = acesso.id "
                        + " WHERE acesso.tipo = 'Gerente' "
-                       + "   AND funcionario.cpf = \'?\';";
+                       + "   AND funcionario.cpf = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, funcionario.getCpf());
             rs = ps.executeQuery();

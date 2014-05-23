@@ -1,6 +1,7 @@
 package br.ufg.inf.vendaingresso.service;
 
-import br.ufg.inf.vendaingresso.Secao; 
+import br.ufg.inf.vendaingresso.Evento; 
+import br.ufg.inf.vendaingresso.Secao;
 
 /**
  *
@@ -8,5 +9,5 @@ import br.ufg.inf.vendaingresso.Secao;
  */
 public interface SecaoService {
     
-    public void cadastrarSecao(Secao secao);    
+    public void cadastrarSecao(Secao secao, Evento evento);    
 }

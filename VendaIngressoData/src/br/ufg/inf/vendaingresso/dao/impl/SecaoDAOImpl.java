@@ -1,7 +1,8 @@
 package br.ufg.inf.vendaingresso.dao.impl;
 
-import br.ufg.inf.vendaingresso.dao.SecaoDAO;
+import br.ufg.inf.vendaingresso.Evento;
 import br.ufg.inf.vendaingresso.Secao;
+import br.ufg.inf.vendaingresso.dao.SecaoDAO;
 import br.ufg.inf.vendaingresso.utils.*;
         
 import java.sql.Connection;
@@ -24,16 +25,18 @@ public class SecaoDAOImpl implements SecaoDAO{
     /**
      * Metodo para inserir a secao no banco
      * @param secao
+     * @param evento
      */
     @Override
-    public void salvar(Secao secao) {
+    public void salvar(Secao secao, Evento evento) {
         try {
             conn = ConnectionFactory.getConnection(); 
             String sql = "INSERT INTO secao (id, nome, valor) "
-                       +            "VALUES (SELECT NVL(MAX(id),0)+1, \'?\', ? FROM secao);";
+                       +            "VALUES ((SELECT NVL(MAX(id),0)+1 FROM secao), ?, ?, (SELECT id FROM evento WHERE nome = ?))";
             ps = conn.prepareStatement(sql);
             ps.setString(1, secao.getNome());
             ps.setDouble(2, secao.getValor());
+            ps.setString(3, evento.getNome());
             ps.executeUpdate();
         } catch (SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()
@@ -44,9 +47,7 @@ public class SecaoDAOImpl implements SecaoDAO{
                                       + e.getMessage());
         } finally {
             close();
-        }
-        
-        
+        }  
     }
     
     public void close(){

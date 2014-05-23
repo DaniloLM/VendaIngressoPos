@@ -29,10 +29,10 @@ public class EventoDAOImpl implements EventoDAO {
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO EVENTO (id, nome, dataevento) " 
-                       +             "VALUES (SELECT NVL(MAX(id),0)+1, \'?\',\'?\');";
+                       +             "VALUES ((SELECT NVL(MAX(id),0)+1 FROM evento), ?, to_date(?, 'yyyy/mm/dd'))";
             ps = conn.prepareStatement(sql);            
-            ps.setString(2, evento.getNome());
-            ps.setDate(3, (Date) evento.getDataEvento()); 
+            ps.setString(1, evento.getNome());
+            ps.setString(2, evento.getDataEvento()); 
             ps.executeUpdate();
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()

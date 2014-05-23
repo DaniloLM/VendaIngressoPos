@@ -1,5 +1,7 @@
 package br.ufg.inf.vendaingresso.service.impl;
 
+import br.ufg.inf.vendaingresso.Evento;
+import br.ufg.inf.vendaingresso.Ingresso;
 import br.ufg.inf.vendaingresso.Secao;
 import br.ufg.inf.vendaingresso.dao.SecaoDAO;
 import br.ufg.inf.vendaingresso.dao.impl.SecaoDAOImpl;
@@ -20,18 +22,18 @@ public class SecaoServiceImpl implements SecaoService {
     }
 
     @Override
-    public void cadastrarSecao(Secao secao) {
-        validate(secao);
-        secaoDAO.salvar(secao);
+    public void cadastrarSecao(Secao secao, Evento evento) {
+        validate(secao, evento);
+        secaoDAO.salvar(secao, evento);
     }
    
-    private void validate(Secao secao) {
-        if (secao == null) {
+     public void validate(Secao secao, Evento evento){
+        if (secao == null || secao.equals("")){
             throw new SaveException("Seção não pode ser vazia.");
         } else {
-            if (secao.getNome() == null || secao.getNome().equals("")) {
-                throw new SaveException("Nome da seção não pode ser vazio.");
-            } 
-        }
+            if(evento == null || evento.equals("")){
+                throw new SaveException("Evento não pode ser vazio.");
+            }
+        } 
     }
 }

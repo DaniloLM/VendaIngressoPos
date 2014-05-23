@@ -35,18 +35,18 @@ public class CompraDAOImpl implements CompraDAO{
         try{
             conn = ConnectionFactory.getConnection();
             String sql = "INSERT INTO compra " 
-                       + "VALUES (SELECT NVL(MAX(id),0)+1,"
+                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM compra),"
                        +         ",SYSDATE"
                        +         ",(SELECT id "
                        +             "FROM cliente "
-                       +            "WHERE cpf LIKE \'?\')"
+                       +            "WHERE cpf LIKE ?)"
                        +         ",(SELECT id "
                        +             "FROM funcionario "
-                       +            "WHERE cpf LIKE \'?\')"
+                       +            "WHERE cpf LIKE ?)"
                        +         ",(SELECT ingresso.id "
                        +             "FROM ingresso "
                        +             "JOIN secao ON ingresso.idsecao = secao.id "
-                       +            "WHERE secao.nome LIKE \'?\'));";
+                       +            "WHERE secao.nome LIKE ?))";
             ps = conn.prepareStatement(sql);            
             ps.setString(1, cliente.getCpf());
             ps.setString(2, funcionario.getCpf());
@@ -80,8 +80,8 @@ public class CompraDAOImpl implements CompraDAO{
                        +           "FROM compra c " 
                        +           "JOIN funcionario f ON c.idfuncionario = f.id " 
                        +           "JOIN cliente ON c.idcliente = cliente.id"
-                       +          "WHERE cliente.cpf LIKE \'?\' " 
-                       +            "AND f.cpf LIKE \'?\');";
+                       +          "WHERE cliente.cpf LIKE ? " 
+                       +            "AND f.cpf LIKE ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
             ps.setString(2, funcionario.getCpf());
@@ -114,8 +114,8 @@ public class CompraDAOImpl implements CompraDAO{
                        +   "FROM compra c"
                        +   "JOIN funcionario f ON c.idfuncionario = f.id "
                        +   "JOIN cliente ON c.idcliente = cliente.id"
-                       +  "WHERE cliente.cpf LIKE \'?\' "
-                       +    "AND f.cpf LIKE \'?\';";
+                       +  "WHERE cliente.cpf LIKE ? "
+                       +    "AND f.cpf LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
             ps.setString(2, funcionario.getCpf());

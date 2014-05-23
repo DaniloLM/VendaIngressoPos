@@ -1,21 +1,7 @@
 package br.ufg.inf.vendaingresso;
 
-import br.ufg.inf.vendaingresso.service.ClienteService;
-import br.ufg.inf.vendaingresso.service.CompraService;
-import br.ufg.inf.vendaingresso.service.ControleAcessoService;
-import br.ufg.inf.vendaingresso.service.EventoService;
-import br.ufg.inf.vendaingresso.service.FuncionarioService;
-import br.ufg.inf.vendaingresso.service.IngressoService;
-import br.ufg.inf.vendaingresso.service.RelatorioService;
-import br.ufg.inf.vendaingresso.service.SecaoService;
-import br.ufg.inf.vendaingresso.service.impl.ClienteServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.CompraServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.ControleAcessoServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.EventoServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.FuncionarioServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.IngressoServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.RelatorioServiceImpl;
-import br.ufg.inf.vendaingresso.service.impl.SecaoServiceImpl;
+import br.ufg.inf.vendaingresso.service.*;
+import br.ufg.inf.vendaingresso.service.impl.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

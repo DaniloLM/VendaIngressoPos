@@ -26,13 +26,17 @@ import java.util.logging.Logger;
 
 public class Main {     
 
-    public static void main(String args[]) {
-        ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
-        Funcionario funcionario = new Funcionario();
-        
+    public static void main(String args[]) {        
         System.out.println("--------------------------------------------------------------------");
         System.out.println("---------------------- VENDA DE INGRESSOS --------------------------");
         System.out.println("--------------------------------------------------------------------");
+        
+        login();
+    }
+    
+    public static void login(){
+        ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
+        Funcionario funcionario = new Funcionario();
         
         Scanner scanner = new Scanner(System.in);
         
@@ -44,69 +48,73 @@ public class Main {
         String senha = scanner.next();
         funcionario.setSenha(senha);
         
-        System.out.println("--------------------------------------------------------------------");
-        
         boolean controle = controleAcesso.login(funcionario);
         
         if (controle){
             menuprincipal();
-        };
+        } else {
+            login();
+        }
+        
     }
     
     public static void menuprincipal() {
+        Funcionario funcionario = new Funcionario();
         ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
-        Funcionario funcionario = new Funcionario();        
+                
         Scanner input = new Scanner(System.in);
         
-        int sair = 0;
-        while (sair != 6) {
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("------------------------ MENU PRINCIPAL ----------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-            System.out.println("(1) - REALIZAR VENDA");
-            System.out.println("(2) - CADASTRAR CLIENTES");
-            System.out.println("(3) - CADASTRAR EVENTOS");
-            System.out.println("(4) - CADASTRAR FUNCIONÁRIOS");
-            System.out.println("(5) - GERAR RELATÓRIOS");
-            System.out.println("(6) - SAIR");
-            System.out.println("--------------------------------------------------------------------");
-            int menuprincipal = input.nextInt();
-            switch (menuprincipal) {
-                case 1: {
-                    menuVendas();
-                    break;
-                }
-                case 2: {
-                    menuClientes();
-                    break;
-                }
-                case 3: {
-                    menuEventos(); 
-                    break;
-                }
-                case 4: {
-                    menuFuncionarios(); 
-                    break;
-                }
-                case 5: {
-                    System.out.print("Informe seu CPF: ");
-                    String cpf = input.next();
-                    funcionario.setCpf(cpf);
-                    
-                    boolean controle = controleAcesso.verificaAcesso(funcionario);
-                    
-                    if (controle){
-                       gerarRelatorios();  
-                    }
-                    break;
-                }
-                case 6: {
-                    sair();
-                }
-                default:
-                    System.out.println("Opção inválida!");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("------------------------ MENU PRINCIPAL ----------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+        System.out.println("(1) - REALIZAR VENDA");
+        System.out.println("(2) - CADASTRAR CLIENTES");
+        System.out.println("(3) - CADASTRAR EVENTOS");
+        System.out.println("(4) - CADASTRAR FUNCIONÁRIOS");
+        System.out.println("(5) - GERAR RELATÓRIOS");
+        System.out.println("(6) - LOGOUT");
+        System.out.println("(7) - SAIR");
+
+        int opcao = input.nextInt();
+        
+        switch (opcao) {
+            case 1: {
+                menuVendas();
+                break;
             }
+            case 2: {
+                menuClientes();
+                break;
+            }
+            case 3: {
+                menuEventos(); 
+                break;
+            }
+            case 4: {
+                menuFuncionarios(); 
+                break;
+            }
+            case 5: {
+                System.out.print("Informe seu CPF: ");
+                String cpf = input.next();
+                funcionario.setCpf(cpf);
+
+                boolean controle = controleAcesso.verificaAcesso(funcionario);
+
+                if (controle){
+                   gerarRelatorios();  
+                }
+                break;
+            }
+            case 6: {
+                logout();
+            }
+            case 7: {
+                sair();
+            }
+            default:
+                System.out.println("Opção inválida!");
         }
     }
     
@@ -222,35 +230,33 @@ public class Main {
     }
     
     public static void menuClientes() {
-        int sair = 0;
-        while (sair != 3 || sair != 4) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------- CLIENTES -------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-            System.out.println("(1) - CADASTRAR CLIENTE");
-            System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(5) - SAIR");
-            System.out.println("--------------------------------------------------------------------");            
-            int menusecundario = input.nextInt();
-            switch (menusecundario) {
-                case 1: {
-                    cadastrarCliente();
-                    break;
-                }
-                case 2: {
-                    retornarMenuPrincipal();
-                    sair = 3;
-                    break;
-                }
-                case 3: {
-                    sair();
-                    sair = 4;
-                }
-                default:
-                    System.out.println("Opção inválida!");
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("--------------------------- CLIENTES -------------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+        System.out.println("(1) - CADASTRAR CLIENTE");
+        System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
+        System.out.println("(3) - SAIR");
+        System.out.println("--------------------------------------------------------------------");            
+
+        int opcao = input.nextInt();
+
+        switch (opcao) {
+            case 1: {
+                cadastrarCliente();
+                break;
             }
+            case 2: {
+                retornarMenuPrincipal();
+                break;
+            }
+            case 3: {
+                sair();
+            }
+            default:
+                System.out.println("Opção inválida!");
         }
     }
     
@@ -274,48 +280,51 @@ public class Main {
     }
 
     
-    public static void menuEventos() {
-        int sair = 0;
-        while (sair != 3 || sair != 4) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("----------------------------- EVENTOS ------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-            System.out.println("(1) - CADASTRAR EVENTO");
-            System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(5) - SAIR");
-            System.out.println("--------------------------------------------------------------------");
-            int menusecundario = input.nextInt();
-            switch (menusecundario) {
-                case 1: {
-                    cadastrarEvento();
-                    break;
-                }
-                case 2: {
-                    retornarMenuPrincipal();
-                    sair = 3;
-                    break;
-                }
-                case 3: {
-                    sair();
-                    sair = 4;
-                }
-                default:
-                    System.out.println("Opção inválida!");
+    public static void menuEventos() {       
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("----------------------------- EVENTOS ------------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+        System.out.println("(1) - CADASTRAR EVENTO");
+        System.out.println("(2) - CADASTRAR SEÇÕES");
+        System.out.println("(3) - RETORNAR AO MENU PRINCIPAL");
+        System.out.println("(4) - SAIR");
+        System.out.println("--------------------------------------------------------------------");
+        
+        int opcao = input.nextInt();
+        
+        switch (opcao) {
+            case 1: {
+                cadastrarEvento();
+                break;
             }
+            case 2: {
+                cadastrarSecao();
+                break;
+            }
+            case 3: {
+                retornarMenuPrincipal();
+                break;
+            }
+            case 4: {
+                sair();
+            }
+            default:
+                System.out.println("Opção inválida!");
+                menuEventos();
         }
+        
     }
     
     public static void cadastrarEvento() {
         Evento evento = new Evento();
-        Ingresso ingresso = new Ingresso();
         Secao secao = new Secao();
         
         EventoService eventoservice = new EventoServiceImpl();
         SecaoService secaoservice = new SecaoServiceImpl();
         IngressoService ingressoservice = new IngressoServiceImpl();
-        
         
         Scanner input = new Scanner(System.in);
         
@@ -360,12 +369,53 @@ public class Main {
             int j = 0;
             while(j<=countingressos){
                 ingressoservice.cadastrarIngresso(secao);
+                j++;
             }
             i++;
         }
         
         menuEventos();
     }
+    
+    public static void cadastrarSecao() {
+        Evento evento = new Evento();
+        Secao secao = new Secao();
+        
+        SecaoService secaoservice = new SecaoServiceImpl();
+        IngressoService ingressoservice = new IngressoServiceImpl();
+        
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("------------------------- CADASTRAR SEÇÕES -------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        
+        System.out.println("Evento: ");
+        String nomeevento = input.next();
+        evento.setNome(nomeevento);
+        
+        System.out.print("Nome: ");
+        String nomesecao = input.next();
+        secao.setNome(nomesecao);
+
+        System.out.print("Valor: ");
+        Double valor = input.nextDouble();
+        secao.setValor(valor);
+
+        secaoservice.cadastrarSecao(secao, evento);
+
+        System.out.println("Número de ingressos da sessão: ");
+        int countingressos = input.nextInt();
+        int j = 0;
+        while(j<=countingressos){
+            ingressoservice.cadastrarIngresso(secao);
+            j++;
+        }
+        
+        menuEventos();
+    }
+        
+    
 
     public static void menuFuncionarios() {
         int sair = 0;
@@ -515,6 +565,10 @@ public class Main {
         System.out.println("");
         System.out.print("#MENU PRINCIPAL#");
         menuprincipal();
+    }
+    
+    public static void logout(){
+        login();
     }
     
     public static void sair() {

@@ -40,6 +40,10 @@ public class Main {
         
         Scanner scanner = new Scanner(System.in);
         
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("----------------------------- LOGIN --------------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        
         System.out.print("Login: ");
         String login = scanner.next();
         funcionario.setLogin(login);
@@ -74,7 +78,8 @@ public class Main {
         System.out.println("(4) - CADASTRAR FUNCIONÁRIOS");
         System.out.println("(5) - GERAR RELATÓRIOS");
         System.out.println("(6) - LOGOUT");
-        System.out.println("(7) - SAIR");
+        System.out.println("(7) - FECHAR");
+        System.out.println("--------------------------------------------------------------------");
 
         int opcao = input.nextInt();
         
@@ -119,45 +124,45 @@ public class Main {
     }
     
     public static void menuVendas() {
-        int sair = 0;
-        while (sair != 3 || sair != 4) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("----------------------------- VENDAS -------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-            System.out.println("(1) - VENDER INGRESSO");
-            System.out.println("(2) - CANCELAR VENDA");
-            System.out.println("(3) - RECUPERAR VENDA");
-            System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(5) - SAIR");
-            System.out.println("--------------------------------------------------------------------");            
-            int menusecundario = input.nextInt();
-            switch (menusecundario) {
-                case 1: {
-                    venderIngresso();
-                    break;
-                }
-                case 2: {
-                    cancelarVenda();
-                    break;
-                }
-                case 3: {
-                    recuperarVenda();
-                    break;
-                }
-                case 4: {
-                    retornarMenuPrincipal();
-                    sair = 3;
-                    break;
-                }
-                case 5: {
-                    sair();
-                    sair = 4;
-                }
-                default:
-                    System.out.println("Opção inválida!");
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("----------------------------- VENDAS -------------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+        System.out.println("(1) - VENDER INGRESSO");
+        System.out.println("(2) - CANCELAR VENDA");
+        System.out.println("(3) - RECUPERAR VENDA");
+        System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
+        System.out.println("(5) - LOGOUT");
+        System.out.println("(6) - FECHAR");
+        System.out.println("--------------------------------------------------------------------");            
+        int menusecundario = input.nextInt();
+        switch (menusecundario) {
+            case 1: {
+                venderIngresso();
+                break;
             }
+            case 2: {
+                cancelarVenda();
+                break;
+            }
+            case 3: {
+                recuperarVenda();
+                break;
+            }
+            case 4: {
+                retornarMenuPrincipal();
+                break;
+            }
+            case 5: {
+                logout();
+            }
+            case 6: {
+                sair();
+            }
+            default:
+                System.out.println("Opção inválida!");
         }
     }
     
@@ -170,6 +175,10 @@ public class Main {
         Evento evento = new Evento();
         
         Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("-------------------------- VENDER INGRESSO -------------------------");
+        System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o evento: ");
         String nomeevento = scanner.next();
@@ -200,6 +209,10 @@ public class Main {
         
         Scanner scanner = new Scanner(System.in);
         
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("------------------------- RECUPERAR VENDA --------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        
         System.out.print("Informe o CPF do funcionário: ");
         String cpfFuncionario = scanner.next();
         funcionario.setCpf(cpfFuncionario);
@@ -217,6 +230,10 @@ public class Main {
         Cliente cliente = new Cliente();
         
         Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("------------------------ CANCELAR VENDA ----------------------------");
+        System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o CPF do funcionário: ");
         String cpfFuncionario = scanner.next();
@@ -238,7 +255,8 @@ public class Main {
         System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
         System.out.println("(1) - CADASTRAR CLIENTE");
         System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
-        System.out.println("(3) - SAIR");
+        System.out.println("(3) - LOGOUT");
+        System.out.println("(4) - FECHAR");
         System.out.println("--------------------------------------------------------------------");            
 
         int opcao = input.nextInt();
@@ -253,6 +271,9 @@ public class Main {
                 break;
             }
             case 3: {
+                logout();
+            }
+            case 4: {
                 sair();
             }
             default:
@@ -265,6 +286,10 @@ public class Main {
         ClienteService clienteservice = new ClienteServiceImpl();
         
         Scanner input = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("------------------------ CADASTRAR CLIENTE -------------------------");
+        System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Nome: ");
         String nome = input.next();
@@ -290,7 +315,8 @@ public class Main {
         System.out.println("(1) - CADASTRAR EVENTO");
         System.out.println("(2) - CADASTRAR SEÇÕES");
         System.out.println("(3) - RETORNAR AO MENU PRINCIPAL");
-        System.out.println("(4) - SAIR");
+        System.out.println("(4) - LOGOUT");
+        System.out.println("(5) - FECHAR");
         System.out.println("--------------------------------------------------------------------");
         
         int opcao = input.nextInt();
@@ -309,6 +335,9 @@ public class Main {
                 break;
             }
             case 4: {
+                logout();
+            }
+            case 5: {
                 sair();
             }
             default:
@@ -418,35 +447,37 @@ public class Main {
     
 
     public static void menuFuncionarios() {
-        int sair = 0;
-        while (sair != 3 || sair != 4) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------- CLIENTES -------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-            System.out.println("(1) - CADASTRAR FUNCIONARIO");
-            System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(3) - SAIR");
-            System.out.println("--------------------------------------------------------------------");
-            int menusecundario = input.nextInt();
-            switch (menusecundario) {
-                case 1: {
-                    cadastrarFuncionario();
-                    break;
-                }
-                case 2: {
-                    retornarMenuPrincipal();
-                    sair = 3;
-                    break;
-                }
-                case 3: {
-                    sair();
-                    sair = 4;
-                }
-                default:
-                    System.out.println("Opção inválida!");
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("-------------------------- FUNCIONÁRIOS ----------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+        System.out.println("(1) - CADASTRAR FUNCIONARIO");
+        System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
+        System.out.println("(3) - LOGOUT");
+        System.out.println("(4) - FECHAR");
+        System.out.println("--------------------------------------------------------------------");
+        
+        int opcao = input.nextInt();
+        
+        switch (opcao) {
+            case 1: {
+                cadastrarFuncionario();
+                break;
             }
+            case 2: {
+                retornarMenuPrincipal();
+                break;
+            }
+            case 3: {
+                logout();
+            }
+            case 4: {
+                sair();
+            }
+            default:
+                System.out.println("Opção inválida!");
         }
     }
     
@@ -454,7 +485,12 @@ public class Main {
         Funcionario funcionario = new Funcionario();
         Acesso acesso = new Acesso();
         FuncionarioService funcionarioservice = new FuncionarioServiceImpl();
+        
         Scanner input = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("---------------------- CADASTRAR FUNCIONÁRIOS ----------------------");
+        System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Nome: ");
         String nome = input.next();
@@ -482,41 +518,42 @@ public class Main {
     }
     
     private static void gerarRelatorios() {
-        int sair = 0;
-        while (sair != 3 || sair != 4) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("-------------------------- RELATÓRIOS ------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-            System.out.println("(1) - TOTAL DE INGRESSOS VENDIDOS");
-            System.out.println("(2) - TOTAL DE INGRESSOS VENDIDOS POR SEÇÃO DO EVENTO");
-            System.out.println("(3) - TOTAL DE INGRESSOS VENDIDOS POR EVENTO");
-            System.out.println("(4) - SAIR");
-            System.out.println("--------------------------------------------------------------------");
-            int menusecundario = input.nextInt();
-            switch (menusecundario) {
-                case 1: {
-                    gerarTotalVendidos();
-                    break;
-                }
-                case 2: {
-                    gerarTotalVendidosSecao();
-                    sair = 3;
-                    break;
-                }
-                case 3: {
-                    gerarTotalVendidosEvento();
-                    sair = 3;
-                    break;
-                }
-                case 4: {
-                    sair();
-                    sair = 4;
-                }
-                default:
-                    System.out.println("Opção inválida!");
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("-------------------------- RELATÓRIOS ------------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+        System.out.println("(1) - TOTAL DE INGRESSOS VENDIDOS");
+        System.out.println("(2) - TOTAL DE INGRESSOS VENDIDOS POR SEÇÃO DO EVENTO");
+        System.out.println("(3) - TOTAL DE INGRESSOS VENDIDOS POR EVENTO");
+        System.out.println("(4) - LOGOUT");
+        System.out.println("(5) - FECHAR");
+        System.out.println("--------------------------------------------------------------------");
+        
+        int opcao = input.nextInt();
+        
+        switch (opcao) {
+            case 1: {
+                gerarTotalVendidos();
+                break;
             }
+            case 2: {
+                gerarTotalVendidosSecao();
+                break;
+            }
+            case 3: {
+                gerarTotalVendidosEvento();
+                break;
+            }
+            case 4: {
+                logout();
+            }
+            case 5: {
+                sair();
+            }
+            default:
+                System.out.println("Opção inválida!");
         }
     }
     
@@ -561,9 +598,6 @@ public class Main {
     }
     
     public static void retornarMenuPrincipal() {
-        System.out.println("");
-        System.out.println("");
-        System.out.print("#MENU PRINCIPAL#");
         menuprincipal();
     }
     

@@ -9,6 +9,10 @@ import java.util.Date;
 public class Evento {
     private String nome;
     private Date dataEvento;
+    
+    public Evento(){
+        
+    }
 
     public Evento(String nome, Date dataEvento) {
         this.nome = nome;

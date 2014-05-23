@@ -37,9 +37,8 @@ public class CompraServiceImpl implements CompraService {
      * @param evento 
      */
     @Override
-    public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao, Evento evento) {
+    public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao) {
         validate(cliente, funcionario, secao);
-        recuperarAssentosDisponiveis(evento);
         compraDAO.salvar(cliente, funcionario, secao);
         ingressoDAO.atualizar(cliente);
     }

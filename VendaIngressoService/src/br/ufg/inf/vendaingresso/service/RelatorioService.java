@@ -10,7 +10,7 @@ import br.ufg.inf.vendaingresso.Secao;
  */
 public interface RelatorioService {
     
-    public int contaIngressoTotal(Funcionario funcionario);
-    public int contaIngressoSecao(Evento evento, Secao secao, Funcionario funcionario);
-    public int contaIngressoEvento(Evento evento, Funcionario funcionario);
+    public int contaIngressoTotal();
+    public int contaIngressoSecao(Evento evento, Secao secao);
+    public int contaIngressoEvento(Evento evento);
 }

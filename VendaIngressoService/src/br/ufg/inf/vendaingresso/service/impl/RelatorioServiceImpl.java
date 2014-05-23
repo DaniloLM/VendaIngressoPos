@@ -28,38 +28,26 @@ public class RelatorioServiceImpl implements RelatorioService{
      * @return
      */
     @Override
-    public int contaIngressoTotal(Funcionario funcionario) {
-        if(controleacesso.verificaAcesso(funcionario)){
-            int count; 
-            count = ingressoDAO.getVendidosTotal();
-            return count;
-        } else {
-            throw new RuntimeException("Você não tem permissão para acessar o programa.");
-        }
+    public int contaIngressoTotal() {
+        int count; 
+        count = ingressoDAO.getVendidosTotal();
+        return count;
     }
 
     @Override
-    public int contaIngressoSecao(Evento evento, Secao secao, Funcionario funcionario) {
-        if(controleacesso.verificaAcesso(funcionario)){
-            int count;
-            validate(evento, secao);
-            count = ingressoDAO.getVendidosSecao(secao, evento);
-            return count; 
-        } else {
-            throw new RuntimeException("Você não tem permissão para acessar o programa.");
-        }
+    public int contaIngressoSecao(Evento evento, Secao secao) {
+        int count;
+        validate(evento, secao);
+        count = ingressoDAO.getVendidosSecao(secao, evento);
+        return count;
     }
 
     @Override
-    public int contaIngressoEvento(Evento evento, Funcionario funcionario) {
-        if(controleacesso.verificaAcesso(funcionario)){
-            int count; 
-            validate(evento);
-            count = ingressoDAO.getVendidosEvento(evento);
-            return count;
-        } else {
-            throw new RuntimeException("Você não tem permissão para acessar o programa.");
-        }
+    public int contaIngressoEvento(Evento evento) {
+        int count; 
+        validate(evento);
+        count = ingressoDAO.getVendidosEvento(evento);
+        return count;
     }
     
     public void validate(Evento evento, Secao secao){

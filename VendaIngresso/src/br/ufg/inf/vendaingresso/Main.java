@@ -1,21 +1,30 @@
 package br.ufg.inf.vendaingresso;
 
+import br.ufg.inf.vendaingresso.service.ClienteService;
+import br.ufg.inf.vendaingresso.service.CompraService;
 import br.ufg.inf.vendaingresso.service.ControleAcessoService;
+import br.ufg.inf.vendaingresso.service.EventoService;
+import br.ufg.inf.vendaingresso.service.FuncionarioService;
+import br.ufg.inf.vendaingresso.service.IngressoService;
+import br.ufg.inf.vendaingresso.service.RelatorioService;
+import br.ufg.inf.vendaingresso.service.SecaoService;
+import br.ufg.inf.vendaingresso.service.impl.ClienteServiceImpl;
+import br.ufg.inf.vendaingresso.service.impl.CompraServiceImpl;
 import br.ufg.inf.vendaingresso.service.impl.ControleAcessoServiceImpl;
-import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import br.ufg.inf.vendaingresso.service.impl.EventoServiceImpl;
+import br.ufg.inf.vendaingresso.service.impl.FuncionarioServiceImpl;
+import br.ufg.inf.vendaingresso.service.impl.IngressoServiceImpl;
+import br.ufg.inf.vendaingresso.service.impl.RelatorioServiceImpl;
+import br.ufg.inf.vendaingresso.service.impl.SecaoServiceImpl;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
-public class Main {
+public class Main {     
 
-    static int conta_vendas;
-    static double caixa;
-       
-
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ParseException {
         ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
         Funcionario funcionario = new Funcionario();
         
@@ -39,11 +48,12 @@ public class Main {
             menuprincipal();
         };
     }
-
     
-    //MENU PRINCIPAL
-    public static void menuprincipal() {
+    public static void menuprincipal() throws ParseException {
+        ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
+        Funcionario funcionario = new Funcionario();        
         Scanner input = new Scanner(System.in);
+        
         int sair = 0;
         while (sair != 6) {
             System.out.println("--------------------------------------------------------------------");
@@ -74,7 +84,15 @@ public class Main {
                     break;
                 }
                 case 5: {
-                    gerarRelatorios(); 
+                    System.out.print("Informe seu CPF: ");
+                    String cpf = input.next();
+                    funcionario.setCpf(cpf);
+                    
+                    boolean controle = controleAcesso.verificaAcesso(funcionario);
+                    
+                    if (controle){
+                       gerarRelatorios();  
+                    }
                     break;
                 }
                 case 6: {
@@ -86,8 +104,7 @@ public class Main {
         }
     }
     
-    //OPÇÕES DO MENU VENDAS
-    public static void menuVendas() {
+    public static void menuVendas() throws ParseException {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
@@ -130,19 +147,74 @@ public class Main {
     }
     
     public static void venderIngresso(){
+        CompraService compra = new CompraServiceImpl();
+        IngressoService ingresso = new IngressoServiceImpl();
+        Funcionario funcionario = new Funcionario();
+        Cliente cliente = new Cliente();
+        Secao secao = new Secao();
+        Evento evento = new Evento();
         
-    }
-    
-    public static void cancelarVenda(){
+        Scanner scanner = new Scanner(System.in);
         
+        System.out.print("Informe o evento: ");
+        String nomeevento = scanner.next();
+        nomeevento = nomeevento.substring(0,1).toUpperCase().concat(nomeevento.substring(1));
+        evento.setNome(nomeevento);
+        
+        System.out.println(compra.recuperarAssentosDisponiveis(evento));
+        
+        System.out.print("Informe o CPF do funcionário: ");
+        String cpfFuncionario = scanner.next();
+        funcionario.setCpf(cpfFuncionario);
+        
+        System.out.print("Informe o CPF do cliente: ");
+        String cpfCliente = scanner.next();
+        cliente.setCpf(cpfCliente);
+        
+        System.out.print("Informe a seção: ");
+        String secaoNome = scanner.next();
+        secao.setNome(secaoNome);
+        
+        compra.cadastrarCompra(cliente, funcionario, secao);
     }
     
     public static void recuperarVenda(){
+        CompraService compra = new CompraServiceImpl();
+        Funcionario funcionario = new Funcionario();
+        Cliente cliente = new Cliente();
         
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Informe o CPF do funcionário: ");
+        String cpfFuncionario = scanner.next();
+        funcionario.setCpf(cpfFuncionario);
+        
+        System.out.print("Informe o CPF do cliente: ");
+        String cpfCliente = scanner.next();
+        cliente.setCpf(cpfCliente);
+        
+        compra.recuperarCompra(cliente, funcionario);
     }
     
-    //OPÇÕES DO MENU VENDAS
-    public static void menuClientes() {
+    public static void cancelarVenda(){
+        CompraService compra = new CompraServiceImpl();
+        Funcionario funcionario = new Funcionario();
+        Cliente cliente = new Cliente();
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Informe o CPF do funcionário: ");
+        String cpfFuncionario = scanner.next();
+        funcionario.setCpf(cpfFuncionario);
+        
+        System.out.print("Informe o CPF do cliente: ");
+        String cpfCliente = scanner.next();
+        cliente.setCpf(cpfCliente);
+        
+        compra.cancelarCompra(cliente, funcionario);
+    }
+    
+    public static void menuClientes() throws ParseException {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
@@ -174,12 +246,27 @@ public class Main {
         }
     }
     
-    public static void cadastrarCliente(){
+    public static void cadastrarCliente() throws ParseException{
+        Cliente cliente = new Cliente();
+        ClienteService clienteservice = new ClienteServiceImpl();
         
+        Scanner input = new Scanner(System.in);
+        
+        System.out.print("Nome: ");
+        String nome = input.next();
+        cliente.setNome(nome);
+        
+        System.out.println("CPF: ");
+        String cpf = input.next();
+        cliente.setCpf(cpf);
+        
+        clienteservice.cadastrarCliente(cliente);
+                
+        menuClientes();       
     }
 
     
-    public static void menuEventos() {
+    public static void menuEventos() throws ParseException {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
@@ -187,8 +274,10 @@ public class Main {
             System.out.println("----------------------------- EVENTOS ------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("(1) - CADASTRAR EVENTO");
-            System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(3) - SAIR");
+            System.out.println("(2) - CADASTRAR SEÇÕES");
+            System.out.println("(3) - CADASTRAR INGRESSOS");
+            System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
+            System.out.println("(5) - SAIR");
             System.out.println("--------------------------------------------------------------------");
             int menusecundario = input.nextInt();
             switch (menusecundario) {
@@ -196,12 +285,22 @@ public class Main {
                     cadastrarEvento();
                     break;
                 }
+                case 2: {
+                    cadastrarSecao();
+                    break;
+                }
+                /*
                 case 3: {
+                    cadastrarIngresso();
+                    break;
+                }
+                */
+                case 4: {
                     retornarMenuPrincipal();
                     sair = 3;
                     break;
                 }
-                case 4: {
+                case 5: {
                     sair();
                     sair = 4;
                 }
@@ -211,11 +310,44 @@ public class Main {
         }
     }
     
-    public static void cadastrarEvento(){
+    public static void cadastrarEvento() throws ParseException{
+        Evento evento = new Evento();
+        EventoService eventoservice = new EventoServiceImpl();
+        Scanner input = new Scanner(System.in);
         
+        System.out.println("Nome: ");
+        String nome = input.next();
+        evento.setNome(nome);
+        
+        System.out.println("Data: ");
+        String data = input.next();
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = dateFormat.parse(data);
+        evento.setDataEvento(date);
+        
+        eventoservice.cadastrarEvento(evento);
+        menuEventos();  
+    }
+    
+    public static void cadastrarSecao() throws ParseException{
+        SecaoService secaoservice = new SecaoServiceImpl();
+        Secao secao = new Secao();
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("Nome: ");
+        String nome = input.next();
+        secao.setNome(nome);
+        
+        System.out.println("Valor: ");
+        Double valor = input.nextDouble();
+        secao.setValor(valor);
+        
+        secaoservice.cadastrarSecao(secao);
+        menuEventos();
     }
 
-    public static void menuFuncionarios() {
+    public static void menuFuncionarios() throws ParseException {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
@@ -247,8 +379,35 @@ public class Main {
         }
     }
     
-    public static void cadastrarFuncionario(){
+    public static void cadastrarFuncionario() throws ParseException{
+        Funcionario funcionario = new Funcionario();
+        Acesso acesso = new Acesso();
+        FuncionarioService funcionarioservice = new FuncionarioServiceImpl();
+        Scanner input = new Scanner(System.in);
         
+        System.out.print("Nome: ");
+        String nome = input.next();
+        funcionario.setNome(nome);
+        
+        System.out.print("CPF: ");
+        String cpf = input.next();
+        funcionario.setCpf(cpf);
+        
+        System.out.print("Login: ");
+        String login = input.next();
+        funcionario.setLogin(login);
+        
+        System.out.print("Senha: ");
+        String senha = input.next();
+        funcionario.setSenha(senha);
+        
+        System.out.println("Cargo: ");
+        String cargo = input.next();
+        cargo = cargo.substring(0,1).toUpperCase().concat(cargo.substring(1));
+        acesso.setTipo(cargo);
+        
+        funcionarioservice.cadastrarFuncionario(funcionario, acesso);
+        menuFuncionarios();
     }
     
     private static void gerarRelatorios() {
@@ -290,18 +449,46 @@ public class Main {
     }
     
     public static void gerarTotalVendidos(){
-        
+        RelatorioService relatorioservice = new RelatorioServiceImpl();
+        System.out.print("Quantidade de ingressos vendidos no total: ");
+        relatorioservice.contaIngressoTotal();  
     }
     
     public static void gerarTotalVendidosSecao(){
+        RelatorioService relatorioservice = new RelatorioServiceImpl();
+        Evento evento = new Evento();
+        Secao secao = new Secao();
+        Scanner input = new Scanner(System.in);
         
+        System.out.println("Informe o evento: ");
+        String nome = input.next();
+        nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
+        evento.setNome(nome);
+        
+        System.out.println("Informe a seção: ");
+        String nomesecao = input.next();
+        nomesecao = nomesecao.substring(0,1).toUpperCase().concat(nomesecao.substring(1));
+        secao.setNome(nomesecao);
+        
+        System.out.print("Quantidade de ingressos vendidos na seção: ");
+        relatorioservice.contaIngressoSecao(evento, secao);
     }
     
     public static void gerarTotalVendidosEvento(){
+        RelatorioService relatorioservice = new RelatorioServiceImpl();
+        Evento evento = new Evento();
+        Scanner input = new Scanner(System.in);
         
+        System.out.println("Informe o evento: ");
+        String nome = input.next();
+        nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
+        evento.setNome(nome);
+        
+        System.out.print("Quantidade de ingressos vendidos no evento: ");
+        relatorioservice.contaIngressoEvento(evento);
     }
     
-    public static void retornarMenuPrincipal() {
+    public static void retornarMenuPrincipal() throws ParseException {
         System.out.println("");
         System.out.println("");
         System.out.print("#MENU PRINCIPAL#");

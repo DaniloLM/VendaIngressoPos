@@ -16,25 +16,6 @@ public class Main {
        
 
     public static void main(String args[]) {
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@inforplace.no-ip.org:1521:pos [pos em POS]","pos","pos#123");
-            java.sql.Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM cliente");
-            while(rs.next()) {
-               String nome =  rs.getString("nome");
-               System.out.println(nome);
-            }
-        }catch(ClassNotFoundException e) {
-           throw new RuntimeException("Erro ao conectar com o banco" + e.getMessage());
-        }catch(SQLException e) {
-            throw new RuntimeException("Erro de SQL" + e.getSQLState());
-        } finally {
-            System.out.println("Conexao finalizada....");
-        }
-        
-        
-        /**
         ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
         Funcionario funcionario = new Funcionario();
         
@@ -52,11 +33,11 @@ public class Main {
         String senha = scanner.next();
         funcionario.setSenha(senha);
         
-        controleAcesso.login(funcionario);
+        boolean controle = controleAcesso.login(funcionario);
         
-        
-        // menuprincipal();
-        */
+        if (controle){
+            menuprincipal();
+        };
     }
 
     
@@ -64,195 +45,270 @@ public class Main {
     public static void menuprincipal() {
         Scanner input = new Scanner(System.in);
         int sair = 0;
-        while (sair != 4) {
-            System.out.println("");
-            System.out.println("##############################################");
+        while (sair != 6) {
+            System.out.println("--------------------------------------------------------------------");
             System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU");
-            System.out.println("(1) - VENDAS");
-            System.out.println("(2) - EVENTOS");
-            System.out.println("(3) - FUNCIONARIOS");
-            System.out.println("(4) - SAIR");
-            System.out.println("##############################################");
+            System.out.println("(1) - REALIZAR VENDA");
+            System.out.println("(2) - CADASTRAR CLIENTES");
+            System.out.println("(3) - CADASTRAR EVENTOS");
+            System.out.println("(4) - CADASTRAR FUNCIONÁRIOS");
+            System.out.println("(5) - GERAR RELATÓRIOS");
+            System.out.println("(6) - SAIR");
+            System.out.println("--------------------------------------------------------------------");
             int menuprincipal = input.nextInt();
             switch (menuprincipal) {
                 case 1: {
-                    menuvendas();
+                    menuVendas();
                     break;
                 }
                 case 2: {
-                    menueventos();
+                    menuClientes();
                     break;
                 }
                 case 3: {
-                    menufuncionarios(); 
+                    menuEventos(); 
                     break;
                 }
                 case 4: {
-                    sairsistema();
+                    menuFuncionarios(); 
+                    break;
+                }
+                case 5: {
+                    gerarRelatorios(); 
+                    break;
+                }
+                case 6: {
+                    sair();
                 }
                 default:
-                    System.out.println("Esta não é uma opção válida!");
+                    System.out.println("Opção inválida!");
             }
         }
     }
     
-    
-    
-    //OPÇÕES DO MENU "PRINCIPAL"
-    public static void menuvendas() {
+    //OPÇÕES DO MENU VENDAS
+    public static void menuVendas() {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
-            System.out.println("");
-            System.out.println("#VENDAS#");
-            System.out.println("##############################################");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("----------------------------- VENDAS -------------------------------");
+            System.out.println("--------------------------------------------------------------------");
             System.out.println("(1) - VENDER INGRESSO");
             System.out.println("(2) - CANCELAR VENDA");
-            System.out.println("(3) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(4) - SAIR");
-            System.out.println("##############################################");
+            System.out.println("(3) - RECUPERAR VENDA");
+            System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
+            System.out.println("(5) - SAIR");
+            System.out.println("--------------------------------------------------------------------");            
             int menusecundario = input.nextInt();
             switch (menusecundario) {
                 case 1: {
-                    venderingresso();
+                    venderIngresso();
                     break;
                 }
                 case 2: {
-                    cancelarvenda();
+                    cancelarVenda();
                     break;
                 }
                 case 3: {
-                    retornarmenuprincipal();
-                    sair = 3;
+                    recuperarVenda();
                     break;
                 }
                 case 4: {
-                    sairsistema();
+                    retornarMenuPrincipal();
+                    sair = 3;
+                    break;
+                }
+                case 5: {
+                    sair();
                     sair = 4;
                 }
                 default:
-                    System.out.println("Esta não é uma opção válida!");
+                    System.out.println("Opção inválida!");
             }
         }
     }
-
-    public static void menueventos() {
+    
+    public static void venderIngresso(){
+        
+    }
+    
+    public static void cancelarVenda(){
+        
+    }
+    
+    public static void recuperarVenda(){
+        
+    }
+    
+    //OPÇÕES DO MENU VENDAS
+    public static void menuClientes() {
         int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
-            System.out.println("");
-            System.out.println("#EVENTOS#");
-            System.out.println("##############################################");
-            System.out.println("(1) - CADASTRAR EVENTO");
-            System.out.println("(2) - CANCELAR EVENTO");
-            System.out.println("(3) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(4) - SAIR");
-            System.out.println("##############################################");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("--------------------------- CLIENTES -------------------------------");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("(1) - CADASTRAR CLIENTE");
+            System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
+            System.out.println("(5) - SAIR");
+            System.out.println("--------------------------------------------------------------------");            
             int menusecundario = input.nextInt();
             switch (menusecundario) {
                 case 1: {
-                    cadastrarevento();
+                    cadastrarCliente();
                     break;
                 }
                 case 2: {
-                    excluirevento();
-                    break;
-                }
-                case 3: {
-                    retornarmenuprincipal();
+                    retornarMenuPrincipal();
                     sair = 3;
                     break;
                 }
-                case 4: {
-                    sairsistema();
+                case 3: {
+                    sair();
                     sair = 4;
                 }
                 default:
-                    System.out.println("Esta não é uma opção válida!");
+                    System.out.println("Opção inválida!");
             }
         }
-
+    }
+    
+    public static void cadastrarCliente(){
+        
     }
 
-    public static void menufuncionarios() {
-         int sair = 0;
+    
+    public static void menuEventos() {
+        int sair = 0;
         while (sair != 3 || sair != 4) {
             Scanner input = new Scanner(System.in);
-            System.out.println("");
-            System.out.println("#FUNCIONARIOS#");
-            System.out.println("##############################################");
-            System.out.println("(1) - CADASTRAR FUNCIONARIO");
-            System.out.println("(2) - EXCLUIR FUNCIONARIO");
-            System.out.println("(3) - RETORNAR AO MENU PRINCIPAL");
-            System.out.println("(4) - SAIR");
-            System.out.println("##############################################");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("----------------------------- EVENTOS ------------------------------");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("(1) - CADASTRAR EVENTO");
+            System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
+            System.out.println("(3) - SAIR");
+            System.out.println("--------------------------------------------------------------------");
             int menusecundario = input.nextInt();
             switch (menusecundario) {
                 case 1: {
-                    cadastrarfuncionario();
-                    break;
-                }
-                case 2: {
-                    excluirfuncionario();
+                    cadastrarEvento();
                     break;
                 }
                 case 3: {
-                    retornarmenuprincipal();
+                    retornarMenuPrincipal();
                     sair = 3;
                     break;
                 }
                 case 4: {
-                    sairsistema();
+                    sair();
                     sair = 4;
                 }
                 default:
-                    System.out.println("Esta não é uma opção válida!");
+                    System.out.println("Opção inválida!");
             }
         }
-
-    }
-
-    public static void sairsistema() {
-        System.exit(0);
     }
     
-    
-    
-    //OPÇÕES DO MENU "VENDAS"
-    public static void venderingresso() {
-
+    public static void cadastrarEvento(){
+        
     }
 
-    public static void cancelarvenda() {
-
+    public static void menuFuncionarios() {
+        int sair = 0;
+        while (sair != 3 || sair != 4) {
+            Scanner input = new Scanner(System.in);
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("--------------------------- CLIENTES -------------------------------");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("(1) - CADASTRAR FUNCIONARIO");
+            System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
+            System.out.println("(3) - SAIR");
+            System.out.println("--------------------------------------------------------------------");
+            int menusecundario = input.nextInt();
+            switch (menusecundario) {
+                case 1: {
+                    cadastrarFuncionario();
+                    break;
+                }
+                case 2: {
+                    retornarMenuPrincipal();
+                    sair = 3;
+                    break;
+                }
+                case 3: {
+                    sair();
+                    sair = 4;
+                }
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
     }
-
-    public static void retornarmenuprincipal() {
+    
+    public static void cadastrarFuncionario(){
+        
+    }
+    
+    private static void gerarRelatorios() {
+        int sair = 0;
+        while (sair != 3 || sair != 4) {
+            Scanner input = new Scanner(System.in);
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("-------------------------- RELATÓRIOS ------------------------------");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("(1) - TOTAL DE INGRESSOS VENDIDOS");
+            System.out.println("(2) - TOTAL DE INGRESSOS VENDIDOS POR SEÇÃO DO EVENTO");
+            System.out.println("(3) - TOTAL DE INGRESSOS VENDIDOS POR EVENTO");
+            System.out.println("(4) - SAIR");
+            System.out.println("--------------------------------------------------------------------");
+            int menusecundario = input.nextInt();
+            switch (menusecundario) {
+                case 1: {
+                    gerarTotalVendidos();
+                    break;
+                }
+                case 2: {
+                    gerarTotalVendidosSecao();
+                    sair = 3;
+                    break;
+                }
+                case 3: {
+                    gerarTotalVendidosEvento();
+                    sair = 3;
+                    break;
+                }
+                case 4: {
+                    sair();
+                    sair = 4;
+                }
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+    
+    public static void gerarTotalVendidos(){
+        
+    }
+    
+    public static void gerarTotalVendidosSecao(){
+        
+    }
+    
+    public static void gerarTotalVendidosEvento(){
+        
+    }
+    
+    public static void retornarMenuPrincipal() {
         System.out.println("");
         System.out.println("");
         System.out.print("#MENU PRINCIPAL#");
         menuprincipal();
     }
-     
     
-    
-    //OPÇÕES DO MENU "EVENTOS"
-    public static void cadastrarevento(){
-
-}
-    
-    public static void excluirevento(){
-        
-    }
-    
-    
-    
-     //OPÇÕES DO MENU "FUNCIONARIOS"
-    public static void cadastrarfuncionario(){
-        
-    }
-    
-    public static void excluirfuncionario(){
-        
+    public static void sair() {
+        System.exit(0);
     }
 }

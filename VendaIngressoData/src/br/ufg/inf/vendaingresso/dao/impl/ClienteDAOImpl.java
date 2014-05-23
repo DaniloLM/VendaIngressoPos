@@ -44,7 +44,31 @@ public class ClienteDAOImpl implements ClienteDAO{
             close();
         }
     }
-
+    
+    @Override
+    public void atualizar(Cliente cliente) {
+         try {
+            conn = ConnectionFactory.getConnection();
+            String sql = "UPDATE cliente "
+                   +        "SET idcompra = (SELECT id"
+                   +                          "FROM compra "
+                   +                          "JOIN cliente ON compra.idcliente = cliente.id "
+                   +                         "WHERE cliente.cpf LIKE ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, cliente.getCpf());
+            ps.executeUpdate();
+        } catch(SQLException e){
+            throw new RuntimeException("Erro " + e.getSQLState()
+                                       + " ao atualizar objeto: "
+                                       + e.getLocalizedMessage()); 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Erro ao conectar no banco: "
+                                       + e.getMessage());
+        } finally {
+            close();
+        }
+    }
+    
     @Override
     public Cliente getByCpf(Cliente cliente) {
         Cliente clienteLido = null;

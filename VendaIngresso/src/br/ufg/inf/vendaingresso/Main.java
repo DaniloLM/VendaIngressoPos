@@ -361,8 +361,8 @@ public class Main {
         System.out.println("------------------------ CADASTRAR EVENTOS -------------------------");
         System.out.println("--------------------------------------------------------------------");
         
-        System.out.print("Nome: ");
-        String nome = input.next();
+        System.out.print("Nome do evento: ");
+        String nome = input.nextLine();
         evento.setNome(nome);
         
         System.out.print("Ano: ");
@@ -379,12 +379,12 @@ public class Main {
         
         eventoservice.cadastrarEvento(evento);
         
-        System.out.println("Informe o número de seções do evento: ");
+        System.out.print("Informe o número de seções do evento: ");
         int countsecao = input.nextInt();
         int i = 0; 
-        while(i<=countsecao){
-            System.out.print("Nome: ");
-            String nomesecao = input.next();
+        while(i<countsecao){
+            System.out.print("Nome da seção: ");
+            String nomesecao = input.nextLine();
             secao.setNome(nomesecao);
         
             System.out.print("Valor: ");
@@ -393,11 +393,11 @@ public class Main {
         
             secaoservice.cadastrarSecao(secao, evento);
             
-            System.out.println("Número de ingressos da sessão: ");
+            System.out.print("Número de ingressos da sessão: ");
             int countingressos = input.nextInt();
             int j = 0;
-            while(j<=countingressos){
-                ingressoservice.cadastrarIngresso(secao);
+            while(j<countingressos){
+                ingressoservice.cadastrarIngresso(secao, evento);
                 j++;
             }
             i++;
@@ -419,12 +419,12 @@ public class Main {
         System.out.println("------------------------- CADASTRAR SEÇÕES -------------------------");
         System.out.println("--------------------------------------------------------------------");
         
-        System.out.println("Evento: ");
-        String nomeevento = input.next();
+        System.out.print("Nome do evento: ");
+        String nomeevento = input.nextLine();
         evento.setNome(nomeevento);
         
-        System.out.print("Nome: ");
-        String nomesecao = input.next();
+        System.out.print("Nome da seção: ");
+        String nomesecao = input.nextLine();
         secao.setNome(nomesecao);
 
         System.out.print("Valor: ");
@@ -433,11 +433,11 @@ public class Main {
 
         secaoservice.cadastrarSecao(secao, evento);
 
-        System.out.println("Número de ingressos da sessão: ");
+        System.out.print("Número de ingressos da sessão: ");
         int countingressos = input.nextInt();
         int j = 0;
-        while(j<=countingressos){
-            ingressoservice.cadastrarIngresso(secao);
+        while(j<countingressos){
+            ingressoservice.cadastrarIngresso(secao, evento);
             j++;
         }
         

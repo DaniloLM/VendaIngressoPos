@@ -21,9 +21,9 @@ public class IngressoServiceImpl implements IngressoService{
     }
 
     @Override
-    public void cadastrarIngresso(Secao secao) {
+    public void cadastrarIngresso(Secao secao, Evento evento) {
         validate(secao);
-        ingressoDAO.salvar(secao);
+        ingressoDAO.salvar(secao, evento);
     }
     
     public void validate(Secao secao){

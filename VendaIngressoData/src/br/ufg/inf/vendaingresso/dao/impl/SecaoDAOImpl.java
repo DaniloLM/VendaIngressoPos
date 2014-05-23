@@ -31,8 +31,8 @@ public class SecaoDAOImpl implements SecaoDAO{
     public void salvar(Secao secao, Evento evento) {
         try {
             conn = ConnectionFactory.getConnection(); 
-            String sql = "INSERT INTO secao (id, nome, valor) "
-                       +            "VALUES ((SELECT NVL(MAX(id),0)+1 FROM secao), ?, ?, (SELECT id FROM evento WHERE nome = ?))";
+            String sql = "INSERT INTO secao (id, nome, valor, idevento) "
+                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM secao), ?, ?, (SELECT id FROM evento WHERE nome = ?))";
             ps = conn.prepareStatement(sql);
             ps.setString(1, secao.getNome());
             ps.setDouble(2, secao.getValor());

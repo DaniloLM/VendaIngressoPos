@@ -27,20 +27,19 @@ public class IngressoDAOImpl implements IngressoDAO{
     
     /**
      * Metodo para inserir o ingresso no banco
-     * @param ingresso
      * @param secao
      * @param evento
      */
     @Override
-    public void salvar(Secao secao){
+    public void salvar(Secao secao, Evento evento){
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO ingresso VALUES ((SELECT NVL(MAX(id),0)+1 FROM ingresso), " 
-                       +                            ",(SELECT id " 
-                       +                                "FROM secao " 
-                       +                               "WHERE nome LIKE ?)";
+            String sql = "INSERT INTO ingresso (id, idsecao) \n" 
+                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM ingresso), (SELECT secao.id FROM secao JOIN evento ON secao.idevento = evento.id WHERE secao.nome LIKE ? AND evento.nome LIKE ?))" +
+"";
             ps = conn.prepareStatement(sql);            
             ps.setString(1, secao.getNome());
+            ps.setString(2, evento.getNome());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

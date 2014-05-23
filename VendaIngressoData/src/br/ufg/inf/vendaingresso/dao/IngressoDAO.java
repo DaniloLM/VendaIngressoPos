@@ -8,7 +8,7 @@ import java.util.Map;
  * @author Ana Clara
  */
 public interface IngressoDAO {
-    public void salvar(Secao secao);
+    public void salvar(Secao secao, Evento evento);
     public void atualizar(Cliente cliente);
     public int getVendidosTotal();
     public int getVendidosSecao(Secao secao, Evento evento);

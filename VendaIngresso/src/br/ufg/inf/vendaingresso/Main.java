@@ -212,7 +212,8 @@ public class Main {
         String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
-        compra.recuperarCompra(cliente, funcionario);
+        System.out.println(compra.recuperarCompra(cliente, funcionario));
+        menuVendas();
     }
     
     public static void cancelarVenda(){
@@ -504,7 +505,8 @@ public class Main {
     public static void gerarTotalVendidos(){
         RelatorioService relatorioservice = new RelatorioServiceImpl();
         System.out.print("Quantidade de ingressos vendidos no total: ");
-        relatorioservice.contaIngressoTotal();  
+        relatorioservice.contaIngressoTotal(); 
+        gerarRelatorios();
     }
     
     public static void gerarTotalVendidosSecao(){
@@ -525,6 +527,7 @@ public class Main {
         
         System.out.print("Quantidade de ingressos vendidos na seção: ");
         relatorioservice.contaIngressoSecao(evento, secao);
+        gerarRelatorios();
     }
     
     public static void gerarTotalVendidosEvento(){
@@ -539,6 +542,7 @@ public class Main {
         
         System.out.print("Quantidade de ingressos vendidos no evento: ");
         relatorioservice.contaIngressoEvento(evento);
+        gerarRelatorios();
     }
     
     public static void retornarMenuPrincipal() {

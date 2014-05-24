@@ -95,7 +95,7 @@ public class Main {
             }
             case 5: {
                 System.out.print("Informe seu CPF: ");
-                String cpf = input.next();
+                String cpf = input.nextLine();
                 funcionario.setCpf(cpf);
 
                 boolean controle = controleAcesso.verificaAcesso(funcionario);
@@ -398,7 +398,8 @@ public class Main {
         secao.setNome(nomesecao);
 
         System.out.print("Valor: ");
-        Double valor = input.nextDouble();
+        String valorStr = input.nextLine();
+        Double valor = Double.parseDouble(valorStr);
         secao.setValor(valor);
 
         secaoservice.cadastrarSecao(secao, evento);
@@ -442,7 +443,8 @@ public class Main {
         funcionario.setSenha(senha);
         
         System.out.print("Cargo [1 - Gerente] [2 - Operador]:");
-        long cargo = input.nextLong();
+        String cargoStr = input.nextLine();
+        long cargo = Long.parseLong(cargoStr);
         acesso.setId(cargo);
         
         funcionarioservice.cadastrarFuncionario(funcionario, acesso);

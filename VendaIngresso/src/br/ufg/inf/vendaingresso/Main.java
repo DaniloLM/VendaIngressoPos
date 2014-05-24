@@ -102,6 +102,8 @@ public class Main {
 
                 if (controle){
                    gerarRelatorios();  
+                }else{
+                    menuprincipal();
                 }
                 break;
             }

@@ -332,14 +332,14 @@ public class Main {
         String nome = input.nextLine();
         evento.setNome(nome);
         
-        System.out.print("Ano: ");
-        String ano = input.next();
+        System.out.print("Dia: ");
+        String dia = input.nextLine();
         
         System.out.print("Mês: ");
-        String mes = input.next();
+        String mes = input.nextLine();
         
-        System.out.print("Dia: ");
-        String dia = input.next();
+        System.out.print("Ano: ");
+        String ano = input.nextLine();
         
         String data = ano + "/" + mes + "/" + dia;
         evento.setDataEvento(data);
@@ -347,21 +347,24 @@ public class Main {
         eventoservice.cadastrarEvento(evento);
         
         System.out.print("Informe o número de seções do evento: ");
-        int countsecao = input.nextInt();
+        String countsecao = input.nextLine();
+        int count = Integer.parseInt(countsecao);
         int i = 0; 
-        while(i<countsecao){
+        while(i<count){
             System.out.print("Nome da seção: ");
             String nomesecao = input.nextLine();
             secao.setNome(nomesecao);
         
             System.out.print("Valor: ");
-            Double valor = input.nextDouble();
+            String v = input.nextLine();
+            Double valor = Double.parseDouble(v);
             secao.setValor(valor);
         
             secaoservice.cadastrarSecao(secao, evento);
             
             System.out.print("Número de ingressos da sessão: ");
-            int countingressos = input.nextInt();
+            String c = input.nextLine();
+            int countingressos = Integer.parseInt(c);
             int j = 0;
             while(j<countingressos){
                 ingressoservice.cadastrarIngresso(secao, evento);

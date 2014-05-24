@@ -66,7 +66,7 @@ public class CompraDAOImpl implements CompraDAO{
     }
     
     /**
-    * Metodo para remover uma compra pelo idcompra e nome do funcionario
+    * Metodo para remover uma compra cpf do funcionario e do cliente
     * 
     * @param cliente
     * @param funcionario
@@ -75,13 +75,10 @@ public class CompraDAOImpl implements CompraDAO{
     public void remover(Cliente cliente, Funcionario funcionario) {
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "DELETE " 
-                       +   "FROM (SELECT compra.id " 
-                       +           "FROM compra c " 
-                       +           "JOIN funcionario f ON c.idfuncionario = f.id " 
-                       +           "JOIN cliente ON c.idcliente = cliente.id"
-                       +          "WHERE cliente.cpf LIKE ? " 
-                       +            "AND f.cpf LIKE ?)";
+            String sql = "DELETE FROM compra(SELECT compra.id FROM compra "
+                    + "     JOIN funcionario ON compra.idfuncionario = funcionario.id  "
+                    + "     JOIN cliente ON compra.idcliente = cliente.id "
+                    + "     WHERE cliente.cpf LIKE ? AND funcionario.cpf LIKE ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
             ps.setString(2, funcionario.getCpf());

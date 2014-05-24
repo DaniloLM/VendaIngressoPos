@@ -76,7 +76,7 @@ public class CompraDAOImpl implements CompraDAO{
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "DELETE " 
-                       +   "FROM (SELECT id " 
+                       +   "FROM (SELECT compra.id " 
                        +           "FROM compra c " 
                        +           "JOIN funcionario f ON c.idfuncionario = f.id " 
                        +           "JOIN cliente ON c.idcliente = cliente.id"

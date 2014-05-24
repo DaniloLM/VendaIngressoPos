@@ -56,9 +56,6 @@ public class Main {
     }
     
     public static void menuprincipal() {
-        Funcionario funcionario = new Funcionario();
-        ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
-                
         Scanner input = new Scanner(System.in);
         
         System.out.println("--------------------------------------------------------------------");
@@ -74,7 +71,8 @@ public class Main {
         System.out.println("(7) - FECHAR");
         System.out.println("--------------------------------------------------------------------");
 
-        int opcao = input.nextInt();
+        String o = input.next();
+        int opcao = Integer.parseInt(o);
         
         switch (opcao) {
             case 1: {
@@ -94,17 +92,7 @@ public class Main {
                 break;
             }
             case 5: {
-                System.out.print("Informe seu CPF: ");
-                String cpf = input.nextLine();
-                funcionario.setCpf(cpf);
-
-                boolean controle = controleAcesso.verificaAcesso(funcionario);
-
-                if (controle){
-                   gerarRelatorios();  
-                }else{
-                    menuprincipal();
-                }
+                gerarRelatorios();
                 break;
             }
             case 6: {
@@ -456,47 +444,61 @@ public class Main {
     }
     
     private static void gerarRelatorios() {
+        Funcionario funcionario = new Funcionario();
+        ControleAcessoService controleAcesso = new ControleAcessoServiceImpl();
         Scanner input = new Scanner(System.in);
         
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("-------------------------- RELATÓRIOS ------------------------------");
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-        System.out.println("(1) - TOTAL DE INGRESSOS VENDIDOS");
-        System.out.println("(2) - TOTAL DE INGRESSOS VENDIDOS POR SEÇÃO DO EVENTO");
-        System.out.println("(3) - TOTAL DE INGRESSOS VENDIDOS POR EVENTO");
-        System.out.println("(4) - LOGOUT");
-        System.out.println("(5) - FECHAR");
-        System.out.println("--------------------------------------------------------------------");
-        
-        int opcao = input.nextInt();
-        
-        switch (opcao) {
-            case 1: {
-                gerarTotalVendidos();
-                break;
-            }
-            case 2: {
-                gerarTotalVendidosSecao();
-                break;
-            }
-            case 3: {
-                gerarTotalVendidosEvento();
-                break;
-            }
-            case 4: {
-                logout();
-                break;
-            }
-            case 5: {
-                sair();
-                break;
-            }
-            default:
-                System.out.println("Opção inválida!");
-                retornarMenuPrincipal();
-                break;
-        }
+        System.out.print("Informe seu CPF: ");
+        String cpf = input.nextLine();
+        funcionario.setCpf(cpf);
+
+        boolean controle = controleAcesso.verificaAcesso(funcionario);
+
+        if (controle){
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("-------------------------- RELATÓRIOS ------------------------------");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
+            System.out.println("(1) - TOTAL DE INGRESSOS VENDIDOS");
+            System.out.println("(2) - TOTAL DE INGRESSOS VENDIDOS POR SEÇÃO DO EVENTO");
+            System.out.println("(3) - TOTAL DE INGRESSOS VENDIDOS POR EVENTO");
+            System.out.println("(4) - LOGOUT");
+            System.out.println("(5) - FECHAR");
+            System.out.println("--------------------------------------------------------------------");
+
+            String o = input.next();
+            int opcao = Integer.parseInt(o);
+
+            switch (opcao) {
+                case 1: {
+                    gerarTotalVendidos();
+                    break;
+                }
+                case 2: {
+                    gerarTotalVendidosSecao();
+                    break;
+                }
+                case 3: {
+                    gerarTotalVendidosEvento();
+                    break;
+                }
+                case 4: {
+                    logout();
+                    break;
+                }
+                case 5: {
+                    sair();
+                    break;
+                }
+                default:
+                    System.out.println("Opção inválida!");
+                    retornarMenuPrincipal();
+                    break;
+            }  
+        }else{
+            System.out.println("Você não tem permissão para gerar relatórios.");
+            menuprincipal();
+        }   
     }
     
     public static void gerarTotalVendidos(){

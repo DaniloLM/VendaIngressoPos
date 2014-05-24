@@ -8,6 +8,7 @@ import br.ufg.inf.vendaingresso.Ingresso;
 import br.ufg.inf.vendaingresso.Secao;
 import br.ufg.inf.vendaingresso.dao.CompraDAO;
 import br.ufg.inf.vendaingresso.dao.IngressoDAO;
+import br.ufg.inf.vendaingresso.dao.ClienteDAO;
 import br.ufg.inf.vendaingresso.dao.impl.CompraDAOImpl;
 import br.ufg.inf.vendaingresso.dao.impl.IngressoDAOImpl;
 import br.ufg.inf.vendaingresso.exception.SaveException;
@@ -21,11 +22,14 @@ import java.util.Map;
 public class CompraServiceImpl implements CompraService {
 
     CompraDAO compraDAO; 
-    IngressoDAO ingressoDAO; 
+    IngressoDAO ingressoDAO;
+﻿    ClienteDAO clienteDAO;
+
     
     public CompraServiceImpl(){
         compraDAO = new CompraDAOImpl(); 
         ingressoDAO = new IngressoDAOImpl();
+        clienteDAO = new ClienteDAOImpl();
     }
     
     /**
@@ -41,6 +45,7 @@ public class CompraServiceImpl implements CompraService {
         validate(cliente, funcionario, secao);
         compraDAO.salvar(cliente, funcionario, secao);
         ingressoDAO.atualizar(cliente);
+        clienteDAO.atualizar(cliente);
     }
     
     /**

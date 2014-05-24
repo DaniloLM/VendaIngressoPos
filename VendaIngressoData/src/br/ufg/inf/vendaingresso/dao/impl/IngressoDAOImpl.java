@@ -170,7 +170,7 @@ public class IngressoDAOImpl implements IngressoDAO{
     public int getVendidosEvento(Evento evento) {
         try {
             conn = ConnectionFactory.getConnection();
-            String sql =   "SELECT COUNT(id) AS vendidos " 
+            String sql =   "SELECT COUNT(ingresso.id) AS vendidos " 
                         +    "FROM ingresso "
                         +    "JOIN secao ON ingresso.idsecao = secao.id " 
                         +    "JOIN evento ON secao.idevento = evento.id " 

@@ -118,11 +118,10 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
         System.out.println("(1) - VENDER INGRESSO");
-        System.out.println("(2) - CANCELAR VENDA");
-        System.out.println("(3) - RECUPERAR VENDA");
-        System.out.println("(4) - RETORNAR AO MENU PRINCIPAL");
-        System.out.println("(5) - LOGOUT");
-        System.out.println("(6) - FECHAR");
+        System.out.println("(2) - RECUPERAR VENDA");
+        System.out.println("(3) - RETORNAR AO MENU PRINCIPAL");
+        System.out.println("(4) - LOGOUT");
+        System.out.println("(5) - FECHAR");
         System.out.println("--------------------------------------------------------------------");            
         
         String menuSecStr = input.nextLine();
@@ -133,22 +132,18 @@ public class Main {
                 break;
             }
             case 2: {
-                cancelarVenda();
-                break;
-            }
-            case 3: {
                 recuperarVenda();
                 break;
             }
-            case 4: {
-                retornarMenuPrincipal();
+            case 3: {
+                menuprincipal();
                 break;
             }
-            case 5: {
+            case 4: {
                 logout();
                 break;
             }
-            case 6: {
+            case 5: {
                 sair();
                 break;
             }
@@ -291,7 +286,7 @@ public class Main {
                 break;
             }
             case 3: {
-                retornarMenuPrincipal();
+                menuprincipal();
                 break;
             }
             case 4: {
@@ -498,7 +493,7 @@ public class Main {
                 }
                 default:
                     System.out.println("Opção inválida!");
-                    retornarMenuPrincipal();
+                    menuprincipal();
                     break;
             }  
         }else{
@@ -510,8 +505,8 @@ public class Main {
     public static void gerarTotalVendidos(){
         RelatorioService relatorioservice = new RelatorioServiceImpl();
         System.out.print("Quantidade de ingressos vendidos no total: ");
-        relatorioservice.contaIngressoTotal(); 
-        gerarRelatorios();
+        System.out.println(relatorioservice.contaIngressoTotal()); 
+        menuprincipal();
     }
     
     public static void gerarTotalVendidosSecao(){
@@ -520,19 +515,17 @@ public class Main {
         Secao secao = new Secao();
         Scanner input = new Scanner(System.in);
         
-        System.out.println("Informe o evento: ");
+        System.out.print("Informe o evento: ");
         String nome = input.nextLine();
-        nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
         evento.setNome(nome);
         
-        System.out.println("Informe a seção: ");
+        System.out.print("Informe a seção: ");
         String nomesecao = input.nextLine();
-        nomesecao = nomesecao.substring(0,1).toUpperCase().concat(nomesecao.substring(1));
         secao.setNome(nomesecao);
         
         System.out.print("Quantidade de ingressos vendidos na seção: ");
-        relatorioservice.contaIngressoSecao(evento, secao);
-        gerarRelatorios();
+        System.out.println(relatorioservice.contaIngressoSecao(evento, secao));
+        menuprincipal();
     }
     
     public static void gerarTotalVendidosEvento(){
@@ -540,17 +533,12 @@ public class Main {
         Evento evento = new Evento();
         Scanner input = new Scanner(System.in);
         
-        System.out.println("Informe o evento: ");
+        System.out.print("Informe o evento: ");
         String nome = input.nextLine();
-        nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
         evento.setNome(nome);
         
         System.out.print("Quantidade de ingressos vendidos no evento: ");
-        relatorioservice.contaIngressoEvento(evento);
-        gerarRelatorios();
-    }
-    
-    public static void retornarMenuPrincipal() {
+        System.out.println(relatorioservice.contaIngressoEvento(evento));
         menuprincipal();
     }
     

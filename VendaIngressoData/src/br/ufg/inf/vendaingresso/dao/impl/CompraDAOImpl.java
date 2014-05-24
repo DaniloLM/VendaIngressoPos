@@ -109,8 +109,7 @@ public class CompraDAOImpl implements CompraDAO{
         Map<String, String> compra = new HashMap<>();
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT to_char(datacompra, 'dd/mm/yyyy') as datacompra, secao.nome as nome" +
-                           "FROM compra, ingresso, secao " +
+            String sql = "SELECT to_char(datacompra, 'dd/mm/yyyy') as datacompra, secao.nome as nome FROM compra, ingresso, secao " +
                           "WHERE compra.idingresso = ingresso.id " +
                             "AND ingresso.idsecao = secao.id " +
                             "AND idfuncionario IN (SELECT id FROM funcionario WHERE cpf LIKE ?) " +

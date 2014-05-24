@@ -97,16 +97,14 @@ public class IngressoDAOImpl implements IngressoDAO{
      */
     @Override
     public int getVendidosTotal() {
-        int count = 0;
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT COUNT(id) AS vendidos"
-                       +   "FROM ingressos "
-                       +  "WHERE idcompra IS NOT NULL";
+            String sql = "SELECT COUNT(id) AS vendidos FROM ingresso WHERE idcompra IS NOT NULL";
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery();
             if (rs.next()) {
-               count = rs.getInt("vendidos");
+               int count = rs.getInt("vendidos");
+               return count;
             } else {
                 close(); 
                 throw new RuntimeException("Não existem ingressos vendidos!"); 
@@ -120,7 +118,6 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return count;
         } 
     }
     
@@ -132,22 +129,22 @@ public class IngressoDAOImpl implements IngressoDAO{
      */
     @Override
     public int getVendidosSecao(Secao secao, Evento evento) {
-        int count = 0;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "SELECT COUNT(id) AS vendidos " 
-                       +   "FROM ingresso i " 
-                       +   "JOIN evento e on i.idevento = e.idevento "
-                       +   "JOIN secao s on i.idsecao = s.idsecao "
-                       +  "WHERE idcompra IS NOT NULL " 
-                       +    "AND e.nome LIKE ? "
-                       +    "AND s.nome LIKE ?";
+            String sql =  "SELECT COUNT(ingresso.id) AS vendidos " +
+                            "FROM ingresso " +
+                            "JOIN secao  on ingresso.idsecao = secao.id " +
+                            "JOIN evento on secao.idevento = evento.id " +
+                           "WHERE idcompra IS NOT NULL " +
+                             "AND evento.nome LIKE ?" +
+                             "AND secao.nome LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             ps.setString(2, secao.getNome());
             rs = ps.executeQuery();  
             if (rs.next()){
-                count = rs.getInt("vendidos");
+                int count = rs.getInt("vendidos");
+                return count;
             } else {
                 close();
                 throw new RuntimeException("Não existem ingressos vendidos para a secao do evento!");
@@ -160,8 +157,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                 throw new RuntimeException("Erro ao conectar ao banco: "
                                          + e.getMessage()); 
         } finally {
-            close();
-            return count;
+            close();     
         }
     }
     
@@ -172,19 +168,20 @@ public class IngressoDAOImpl implements IngressoDAO{
      */
     @Override
     public int getVendidosEvento(Evento evento) {
-        int count = 0;
         try {
             conn = ConnectionFactory.getConnection();
             String sql =   "SELECT COUNT(id) AS vendidos " 
-                        +    "FROM ingresso i " 
-                        +    "JOIN evento e on i.idevento = e.idevento " 
+                        +    "FROM ingresso "
+                        +    "JOIN secao ON ingresso.idsecao = secao.id " 
+                        +    "JOIN evento ON secao.idevento = evento.id " 
                         +   "WHERE idcompra IS NOT NULL " 
-                        +     "AND e.nome LIKE ?";
+                        +     "AND evento.nome LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery(); 
             if(rs.next()){
-                count = rs.getInt("vendidos");
+                int count = rs.getInt("vendidos");
+                return count;
             } else {
                 close();
                 throw new RuntimeException("Não existem ingressos vendidos para o evento!");
@@ -198,7 +195,6 @@ public class IngressoDAOImpl implements IngressoDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return count;
         }
     }
     

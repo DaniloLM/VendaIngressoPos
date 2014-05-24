@@ -49,13 +49,14 @@ public class ClienteDAOImpl implements ClienteDAO{
     public void atualizar(Cliente cliente) {
          try {
             conn = ConnectionFactory.getConnection();
-            String sql = "UPDATE cliente "
-                   +        "SET idcompra = (SELECT compra.id"
-                   +                          "FROM compra "
-                   +                          "JOIN cliente ON compra.idcliente = cliente.id "
-                   +                         "WHERE cliente.cpf LIKE ?)";
+            String sql = "UPDATE cliente SET idcompra = (SELECT compra.id "
+                                                        + "FROM compra "
+                                                        + "JOIN cliente ON compra.idcliente = cliente.id "
+                                                       + "WHERE cliente.cpf LIKE ?) "
+                        + "WHERE cpf LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
+            ps.setString(2, cliente.getCpf());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

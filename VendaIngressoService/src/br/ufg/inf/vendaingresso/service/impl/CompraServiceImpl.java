@@ -4,7 +4,6 @@ import br.ufg.inf.vendaingresso.Cliente;
 import br.ufg.inf.vendaingresso.Compra;
 import br.ufg.inf.vendaingresso.Evento;
 import br.ufg.inf.vendaingresso.Funcionario;
-import br.ufg.inf.vendaingresso.Ingresso;
 import br.ufg.inf.vendaingresso.Secao;
 import br.ufg.inf.vendaingresso.dao.CompraDAO;
 import br.ufg.inf.vendaingresso.dao.IngressoDAO;
@@ -43,7 +42,7 @@ public class CompraServiceImpl implements CompraService {
     public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao, Evento evento) {
         validate(cliente, funcionario, secao);
         compraDAO.salvar(cliente, funcionario, secao, evento);
-        ingressoDAO.atualizar(cliente);
+        ingressoDAO.atualizar(cliente, secao, evento);
         clienteDAO.atualizar(cliente);
     }
     

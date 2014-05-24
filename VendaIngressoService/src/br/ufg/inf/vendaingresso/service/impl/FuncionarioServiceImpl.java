@@ -39,7 +39,7 @@ public class FuncionarioServiceImpl implements FuncionarioService{
             } else if (funcionario.getSenha() == null || funcionario.getSenha().equals("")){
                 throw new SaveException("Senha não pode ser vazia.");
             } else {
-                if (acesso.getTipo() == null || acesso.getTipo().equals("")){
+                if (acesso == null || acesso.equals("")){
                     throw new SaveException("Tipo de acesso não pode ser vazio.");
             }
         }

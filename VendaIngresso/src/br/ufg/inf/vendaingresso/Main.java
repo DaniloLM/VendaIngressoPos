@@ -438,10 +438,9 @@ public class Main {
         String senha = input.nextLine();
         funcionario.setSenha(senha);
         
-        System.out.println("Cargo: ");
-        String cargo = input.nextLine();
-        cargo = cargo.substring(0,1).toUpperCase().concat(cargo.substring(1));
-        acesso.setTipo(cargo);
+        System.out.print("Cargo [1 - Gerente] [2 - Operador]:");
+        long cargo = input.nextLong();
+        acesso.setId(cargo);
         
         funcionarioservice.cadastrarFuncionario(funcionario, acesso);
         menuprincipal();

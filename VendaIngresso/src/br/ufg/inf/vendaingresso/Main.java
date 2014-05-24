@@ -40,9 +40,7 @@ public class Main {
         
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("--------------------------------------------------------------------");
         System.out.println("----------------------------- LOGIN --------------------------------");
-        System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Login: ");
         String login = scanner.next();
@@ -181,8 +179,7 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o evento: ");
-        String nomeevento = scanner.next();
-        nomeevento = nomeevento.substring(0,1).toUpperCase().concat(nomeevento.substring(1));
+        String nomeevento = scanner.nextLine();
         evento.setNome(nomeevento);
         
         System.out.println(compra.recuperarAssentosDisponiveis(evento));

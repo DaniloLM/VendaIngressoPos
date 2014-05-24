@@ -208,7 +208,7 @@ public class IngressoDAOImpl implements IngressoDAO{
                        + "      ,secao.nome AS nome "
                        + "  FROM ingresso "
                        + "  JOIN secao ON ingresso.idsecao = secao.id "
-                       + "  JOIN evento ON ingress.idevento = evento.id "
+                       + "  JOIN evento ON ingresso.idevento = evento.id "
                        + " WHERE ingresso.idcompra IS NULL"
                        + "   AND evento.nome LIKE ?";
             ps = conn.prepareStatement(sql);

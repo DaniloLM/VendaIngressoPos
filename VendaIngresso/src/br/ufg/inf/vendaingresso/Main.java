@@ -199,6 +199,8 @@ public class Main {
         secao.setNome(secaoNome);
         
         compra.cadastrarCompra(cliente, funcionario, secao, evento);
+        menuVendas();
+        
     }
     
     public static void recuperarVenda(){

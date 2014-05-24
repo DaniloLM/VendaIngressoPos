@@ -44,6 +44,7 @@ public class CompraServiceImpl implements CompraService {
         compraDAO.salvar(cliente, funcionario, secao, evento);
         ingressoDAO.atualizar(cliente, secao, evento);
         clienteDAO.atualizar(cliente);
+        System.out.println("Venda realizada com sucesso!");
     }
     
     /**

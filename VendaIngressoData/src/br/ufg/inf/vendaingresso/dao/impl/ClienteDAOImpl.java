@@ -50,7 +50,7 @@ public class ClienteDAOImpl implements ClienteDAO{
          try {
             conn = ConnectionFactory.getConnection();
             String sql = "UPDATE cliente "
-                   +        "SET idcompra = (SELECT id"
+                   +        "SET idcompra = (SELECT compra.id"
                    +                          "FROM compra "
                    +                          "JOIN cliente ON compra.idcliente = cliente.id "
                    +                         "WHERE cliente.cpf LIKE ?)";

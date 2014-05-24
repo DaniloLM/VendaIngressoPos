@@ -23,6 +23,7 @@ public class ClienteServiceImpl implements ClienteService {
     public void cadastrarCliente(Cliente cliente) throws SaveException{
         validate(cliente);
         clienteDAO.salvar(cliente);
+        System.out.println("Cliente inserido com sucesso!");
     }
 
     private void validate(Cliente cliente) {

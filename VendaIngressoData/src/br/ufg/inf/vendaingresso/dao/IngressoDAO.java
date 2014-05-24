@@ -13,5 +13,5 @@ public interface IngressoDAO {
     public int getVendidosTotal();
     public int getVendidosSecao(Secao secao, Evento evento);
     public int getVendidosEvento(Evento evento);
-    public Map<Ingresso, Secao> getIngressoDisponiveis(Evento evento);
+    public Map<String, Integer> getIngressoDisponiveis(Evento evento);
 }

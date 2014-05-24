@@ -24,6 +24,7 @@ public class FuncionarioServiceImpl implements FuncionarioService{
     public void cadastrarFuncionario(Funcionario funcionario, Acesso acesso) throws SaveException{
         validate(funcionario, acesso);
         funcionarioDAO.salvar(funcionario, acesso);
+        System.out.println("Funcionário inserido com sucesso!");
     }
     
     public void validate(Funcionario funcionario, Acesso acesso){

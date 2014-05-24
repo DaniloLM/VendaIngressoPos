@@ -40,9 +40,9 @@ public class CompraServiceImpl implements CompraService {
      * @param secao 
      */
     @Override
-    public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao) {
+    public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao, Evento evento) {
         validate(cliente, funcionario, secao);
-        compraDAO.salvar(cliente, funcionario, secao);
+        compraDAO.salvar(cliente, funcionario, secao, evento);
         ingressoDAO.atualizar(cliente);
         clienteDAO.atualizar(cliente);
     }
@@ -82,9 +82,9 @@ public class CompraServiceImpl implements CompraService {
      * @return assentos
     */
     @Override
-    public Map<Ingresso, Secao> recuperarAssentosDisponiveis(Evento evento) {
+    public Map<String, Integer> recuperarAssentosDisponiveis(Evento evento) {
         validate(evento);
-        Map<Ingresso, Secao> assentos = ingressoDAO.getIngressoDisponiveis(evento);
+        Map<String, Integer> assentos = ingressoDAO.getIngressoDisponiveis(evento);
         return assentos;
     }
     

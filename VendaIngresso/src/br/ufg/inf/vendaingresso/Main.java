@@ -55,6 +55,7 @@ public class Main {
         if (controle){
             menuprincipal();
         } else {
+            System.out.println("Usuário ou senha inválidos!");
             login();
         }
         
@@ -70,10 +71,10 @@ public class Main {
         System.out.println("------------------------ MENU PRINCIPAL ----------------------------");
         System.out.println("--------------------------------------------------------------------");
         System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-        System.out.println("(1) - REALIZAR VENDA");
-        System.out.println("(2) - CADASTRAR CLIENTES");
+        System.out.println("(1) - VENDAS");
+        System.out.println("(2) - CADASTRAR FUNCIONÁRIOS");
         System.out.println("(3) - CADASTRAR EVENTOS");
-        System.out.println("(4) - CADASTRAR FUNCIONÁRIOS");
+        System.out.println("(4) - CADASTRAR CLIENTES");
         System.out.println("(5) - GERAR RELATÓRIOS");
         System.out.println("(6) - LOGOUT");
         System.out.println("(7) - FECHAR");
@@ -87,7 +88,7 @@ public class Main {
                 break;
             }
             case 2: {
-                menuClientes();
+                cadastrarFuncionario(); 
                 break;
             }
             case 3: {
@@ -95,7 +96,7 @@ public class Main {
                 break;
             }
             case 4: {
-                menuFuncionarios(); 
+                cadastrarCliente();
                 break;
             }
             case 5: {
@@ -166,7 +167,6 @@ public class Main {
     
     public static void venderIngresso(){
         CompraService compra = new CompraServiceImpl();
-        IngressoService ingresso = new IngressoServiceImpl();
         Funcionario funcionario = new Funcionario();
         Cliente cliente = new Cliente();
         Secao secao = new Secao();
@@ -196,7 +196,7 @@ public class Main {
         String secaoNome = scanner.next();
         secao.setNome(secaoNome);
         
-        compra.cadastrarCompra(cliente, funcionario, secao);
+        compra.cadastrarCompra(cliente, funcionario, secao, evento);
     }
     
     public static void recuperarVenda(){
@@ -243,41 +243,6 @@ public class Main {
         compra.cancelarCompra(cliente, funcionario);
     }
     
-    public static void menuClientes() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("--------------------------- CLIENTES -------------------------------");
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-        System.out.println("(1) - CADASTRAR CLIENTE");
-        System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
-        System.out.println("(3) - LOGOUT");
-        System.out.println("(4) - FECHAR");
-        System.out.println("--------------------------------------------------------------------");            
-
-        int opcao = input.nextInt();
-
-        switch (opcao) {
-            case 1: {
-                cadastrarCliente();
-                break;
-            }
-            case 2: {
-                retornarMenuPrincipal();
-                break;
-            }
-            case 3: {
-                logout();
-            }
-            case 4: {
-                sair();
-            }
-            default:
-                System.out.println("Opção inválida!");
-        }
-    }
-    
     public static void cadastrarCliente() {
         Cliente cliente = new Cliente();
         ClienteService clienteservice = new ClienteServiceImpl();
@@ -298,7 +263,7 @@ public class Main {
         
         clienteservice.cadastrarCliente(cliente);
                 
-        menuClientes();       
+        menuprincipal();       
     }
 
     
@@ -440,43 +405,6 @@ public class Main {
         
         menuEventos();
     }
-        
-    
-
-    public static void menuFuncionarios() {
-        Scanner input = new Scanner(System.in);
-        
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("-------------------------- FUNCIONÁRIOS ----------------------------");
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("SELECIONE UMA DAS OPÇÕES DO MENU:");
-        System.out.println("(1) - CADASTRAR FUNCIONARIO");
-        System.out.println("(2) - RETORNAR AO MENU PRINCIPAL");
-        System.out.println("(3) - LOGOUT");
-        System.out.println("(4) - FECHAR");
-        System.out.println("--------------------------------------------------------------------");
-        
-        int opcao = input.nextInt();
-        
-        switch (opcao) {
-            case 1: {
-                cadastrarFuncionario();
-                break;
-            }
-            case 2: {
-                retornarMenuPrincipal();
-                break;
-            }
-            case 3: {
-                logout();
-            }
-            case 4: {
-                sair();
-            }
-            default:
-                System.out.println("Opção inválida!");
-        }
-    }
     
     public static void cadastrarFuncionario() {
         Funcionario funcionario = new Funcionario();
@@ -511,7 +439,7 @@ public class Main {
         acesso.setTipo(cargo);
         
         funcionarioservice.cadastrarFuncionario(funcionario, acesso);
-        menuFuncionarios();
+        menuprincipal();
     }
     
     private static void gerarRelatorios() {

@@ -34,9 +34,12 @@ public class IngressoDAOImpl implements IngressoDAO{
     public void salvar(Secao secao, Evento evento){
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO ingresso (id, idsecao) \n" 
-                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM ingresso), (SELECT secao.id FROM secao JOIN evento ON secao.idevento = evento.id WHERE secao.nome LIKE ? AND evento.nome LIKE ?))" +
-"";
+            String sql = "INSERT INTO ingresso (id, idsecao) " 
+                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM ingresso)"
+                       + ",(SELECT secao.id "
+                       +     "FROM secao "
+                       +     "JOIN evento ON secao.idevento = evento.id "
+                       +    "WHERE secao.nome LIKE ? AND evento.nome LIKE ?))";
             ps = conn.prepareStatement(sql);            
             ps.setString(1, secao.getNome());
             ps.setString(2, evento.getNome());
@@ -62,11 +65,10 @@ public class IngressoDAOImpl implements IngressoDAO{
     public void atualizar(Cliente cliente){
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "UPDATE ingresso "
-                   +        "SET idcompra = (SELECT id"
-                   +                          "FROM compra "
-                   +                          "JOIN cliente ON compra.idcliente = cliente.id "
-                   +                         "WHERE cliente.cpf LIKE ?)";
+            String sql = "UPDATE ingresso SET idcompra = (SELECT compra.id "
+                                                         + "FROM compra "
+                                                         + "JOIN cliente ON compra.idcliente = cliente.id "
+                                                        + "WHERE cliente.cpf LIKE ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
             ps.executeUpdate();
@@ -200,26 +202,24 @@ public class IngressoDAOImpl implements IngressoDAO{
      * @return ingressos
      */
     @Override
-    public Map<Ingresso, Secao> getIngressoDisponiveis(Evento evento){
-        Map<Ingresso,Secao> ingresso = new HashMap<>();
+    public Map<String, Integer> getIngressoDisponiveis(Evento evento){
+        Map<String, Integer> ingresso = new HashMap<>();
         try{
             conn = ConnectionFactory.getConnection();
-            String sql = "SELECT ingresso.id AS id " 
-                       + "      ,secao.nome AS nome "
-                       + "  FROM ingresso "
-                       + "  JOIN secao ON ingresso.idsecao = secao.id "
-                       + "  JOIN evento ON ingresso.idevento = evento.id "
-                       + " WHERE ingresso.idcompra IS NULL"
-                       + "   AND evento.nome LIKE ?";
+            String sql = "    SELECT secao.nome " +
+                         "          ,count(ingresso.id) AS ingressos " +
+                         "      FROM ingresso " +
+                         "      JOIN secao ON ingresso.idsecao = secao.id " +
+                         "      JOIN evento ON secao.idevento = evento.id " +
+                         "     WHERE ingresso.idcompra IS NULL AND evento.nome LIKE ? " +
+                         "  GROUP BY secao.nome";
             ps = conn.prepareStatement(sql);
             ps.setString(1, evento.getNome());
             rs = ps.executeQuery();
             while (rs.next()) {
-                Ingresso ingressolido = new Ingresso();
-                Secao secaolida = new Secao();
-                ingressolido.setId(rs.getLong("id"));
-                secaolida.setNome(rs.getString("nome"));
-                ingresso.put(ingressolido, secaolida);
+                String secaolida = rs.getString("nome");
+                int ingressolido = rs.getInt("ingressos");
+                ingresso.put(secaolida, ingressolido);
             }
             return ingresso; 
         } catch (SQLException e){

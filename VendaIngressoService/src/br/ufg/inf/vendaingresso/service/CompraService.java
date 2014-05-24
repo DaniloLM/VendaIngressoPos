@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public interface CompraService {
     
-    public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao);
+    public void cadastrarCompra(Cliente cliente, Funcionario funcionario, Secao secao, Evento evento);
     public void cancelarCompra(Cliente cliente, Funcionario funcionario);
     public Compra recuperarCompra(Cliente cliente, Funcionario funcionario);
-    public Map<Ingresso, Secao> recuperarAssentosDisponiveis(Evento evento);
+    public Map<String, Integer> recuperarAssentosDisponiveis(Evento evento);
 }

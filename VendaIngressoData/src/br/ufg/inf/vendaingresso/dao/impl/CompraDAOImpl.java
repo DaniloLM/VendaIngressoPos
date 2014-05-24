@@ -1,10 +1,11 @@
 package br.ufg.inf.vendaingresso.dao.impl;
 
-import br.ufg.inf.vendaingresso.dao.CompraDAO;
 import br.ufg.inf.vendaingresso.Cliente;
 import br.ufg.inf.vendaingresso.Compra;
+import br.ufg.inf.vendaingresso.Evento;
 import br.ufg.inf.vendaingresso.Funcionario;
 import br.ufg.inf.vendaingresso.Secao;
+import br.ufg.inf.vendaingresso.dao.CompraDAO;
 import br.ufg.inf.vendaingresso.utils.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,28 +30,27 @@ public class CompraDAOImpl implements CompraDAO{
     * @param cliente
     * @param funcionario
     * @param secao
+     * @param evento
     */
     @Override
-    public void salvar(Cliente cliente, Funcionario funcionario, Secao secao) {
+    public void salvar(Cliente cliente, Funcionario funcionario, Secao secao, Evento evento) {
         try{
             conn = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO compra " 
-                       + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM compra),"
-                       +         ",SYSDATE"
-                       +         ",(SELECT id "
-                       +             "FROM cliente "
-                       +            "WHERE cpf LIKE ?)"
-                       +         ",(SELECT id "
-                       +             "FROM funcionario "
-                       +            "WHERE cpf LIKE ?)"
-                       +         ",(SELECT ingresso.id "
-                       +             "FROM ingresso "
-                       +             "JOIN secao ON ingresso.idsecao = secao.id "
-                       +            "WHERE secao.nome LIKE ?))";
+            String sql = "INSERT INTO compra (id, datacompra, idcliente, idfuncionario, idingresso) "
+                         + "VALUES ((SELECT NVL(MAX(id),0)+1 FROM compra)"
+                         +         ",SYSDATE"
+                         +         ",(SELECT id FROM cliente WHERE cpf LIKE ?) " 
+                         +         ",(SELECT id FROM funcionario WHERE cpf LIKE ?) " 
+                         +         ",(SELECT ingresso.id "
+                         +             "FROM ingresso "
+                         +             "JOIN secao ON ingresso.idsecao = secao.id "
+                         +             "JOIN evento ON secao.idevento = evento.id " 
+                         +             " WHERE secao.nome LIKE ? AND evento.nome LIKE ? AND ROWNUM = 1))";
             ps = conn.prepareStatement(sql);            
             ps.setString(1, cliente.getCpf());
             ps.setString(2, funcionario.getCpf());
             ps.setString(3, secao.getNome());
+            ps.setString(4, evento.getNome());
             ps.executeUpdate();
         } catch (SQLException e){
             throw new RuntimeException("Erro " 

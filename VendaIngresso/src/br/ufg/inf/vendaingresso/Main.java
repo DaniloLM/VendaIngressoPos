@@ -429,11 +429,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Nome: ");
-        String nome = input.next();
+        String nome = input.nextLine();
         funcionario.setNome(nome);
         
         System.out.print("CPF: ");
-        String cpf = input.next();
+        String cpf = input.nextLine();
         funcionario.setCpf(cpf);
         
         System.out.print("Login: ");

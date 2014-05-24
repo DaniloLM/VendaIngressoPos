@@ -124,8 +124,10 @@ public class Main {
         System.out.println("(5) - LOGOUT");
         System.out.println("(6) - FECHAR");
         System.out.println("--------------------------------------------------------------------");            
-        int menusecundario = input.nextInt();
-        switch (menusecundario) {
+        
+        String menuSecStr = input.nextLine();
+        int menuSecundario = Integer.parseInt(menuSecStr);
+        switch (menuSecundario) {
             case 1: {
                 venderIngresso();
                 break;
@@ -276,7 +278,8 @@ public class Main {
         System.out.println("(5) - FECHAR");
         System.out.println("--------------------------------------------------------------------");
         
-        int opcao = input.nextInt();
+        String opcaoStr = input.nextLine();
+        int opcao = Integer.parseInt(opcaoStr);
         
         switch (opcao) {
             case 1: {
@@ -398,9 +401,11 @@ public class Main {
         secaoservice.cadastrarSecao(secao, evento);
 
         System.out.print("Número de ingressos da sessão: ");
-        int countingressos = input.nextInt();
+        
+        String countIngressosStr = input.nextLine();
+        int countIngressos = Integer.parseInt(countIngressosStr);
         int j = 0;
-        while(j<countingressos){
+        while(j<countIngressos){
             ingressoservice.cadastrarIngresso(secao, evento);
             j++;
         }

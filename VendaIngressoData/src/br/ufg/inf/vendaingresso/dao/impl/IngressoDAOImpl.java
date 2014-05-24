@@ -100,7 +100,7 @@ public class IngressoDAOImpl implements IngressoDAO{
         int count = 0;
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT COUNT(*) AS vendidos"
+            String sql = "SELECT COUNT(id) AS vendidos"
                        +   "FROM ingressos "
                        +  "WHERE idcompra IS NOT NULL";
             ps = conn.prepareStatement(sql); 
@@ -135,7 +135,7 @@ public class IngressoDAOImpl implements IngressoDAO{
         int count = 0;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "SELECT COUNT(*) AS vendidos " 
+            String sql = "SELECT COUNT(id) AS vendidos " 
                        +   "FROM ingresso i " 
                        +   "JOIN evento e on i.idevento = e.idevento "
                        +   "JOIN secao s on i.idsecao = s.idsecao "
@@ -175,7 +175,7 @@ public class IngressoDAOImpl implements IngressoDAO{
         int count = 0;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql =   "SELECT COUNT(*) AS vendidos " 
+            String sql =   "SELECT COUNT(id) AS vendidos " 
                         +    "FROM ingresso i " 
                         +    "JOIN evento e on i.idevento = e.idevento " 
                         +   "WHERE idcompra IS NOT NULL " 

@@ -43,11 +43,11 @@ public class Main {
         System.out.println("----------------------------- LOGIN --------------------------------");
         
         System.out.print("Login: ");
-        String login = scanner.next();
+        String login = scanner.nextLine();
         funcionario.setLogin(login);
         
         System.out.print("Senha: ");
-        String senha = scanner.next();
+        String senha = scanner.nextLine();
         funcionario.setSenha(senha);
         
         boolean controle = controleAcesso.login(funcionario);
@@ -185,15 +185,15 @@ public class Main {
         System.out.println(compra.recuperarAssentosDisponiveis(evento));
         
         System.out.print("Informe o CPF do funcionário: ");
-        String cpfFuncionario = scanner.next();
+        String cpfFuncionario = scanner.nextLine();
         funcionario.setCpf(cpfFuncionario);
         
         System.out.print("Informe o CPF do cliente: ");
-        String cpfCliente = scanner.next();
+        String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
         System.out.print("Informe a seção: ");
-        String secaoNome = scanner.next();
+        String secaoNome = scanner.nextLine();
         secao.setNome(secaoNome);
         
         compra.cadastrarCompra(cliente, funcionario, secao);
@@ -211,11 +211,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o CPF do funcionário: ");
-        String cpfFuncionario = scanner.next();
+        String cpfFuncionario = scanner.nextLine();
         funcionario.setCpf(cpfFuncionario);
         
         System.out.print("Informe o CPF do cliente: ");
-        String cpfCliente = scanner.next();
+        String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
         compra.recuperarCompra(cliente, funcionario);
@@ -233,11 +233,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o CPF do funcionário: ");
-        String cpfFuncionario = scanner.next();
+        String cpfFuncionario = scanner.nextLine();
         funcionario.setCpf(cpfFuncionario);
         
         System.out.print("Informe o CPF do cliente: ");
-        String cpfCliente = scanner.next();
+        String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
         compra.cancelarCompra(cliente, funcionario);

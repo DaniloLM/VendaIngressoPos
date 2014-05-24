@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -103,28 +105,26 @@ public class CompraDAOImpl implements CompraDAO{
     * @return compra
     */
     @Override
-    public Compra getCompra(Cliente cliente, Funcionario funcionario){
-        Compra compra = null;
+    public Map<String, String> getCompra(Cliente cliente, Funcionario funcionario){
+        Map<String, String> compra = new HashMap<>();
         try{
             conn = ConnectionFactory.getConnection(); 
-            String sql = "SELECT * "
-                       +   "FROM compra c"
-                       +   "JOIN funcionario f ON c.idfuncionario = f.id "
-                       +   "JOIN cliente ON c.idcliente = cliente.id"
-                       +  "WHERE cliente.cpf LIKE ? "
-                       +    "AND f.cpf LIKE ?";
+            String sql = "SELECT to_char(datacompra, 'dd/mm/yyyy') as datacompra, secao.nome as nome" +
+                           "FROM compra, ingresso, secao " +
+                          "WHERE compra.idingresso = ingresso.id " +
+                            "AND ingresso.idsecao = secao.id " +
+                            "AND idfuncionario IN (SELECT id FROM funcionario WHERE cpf LIKE ?) " +
+                            "AND idcliente IN (SELECT id FROM cliente WHERE cpf LIKE ?)";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, cliente.getCpf());
-            ps.setString(2, funcionario.getCpf());
+            ps.setString(1, funcionario.getCpf());
+            ps.setString(2, cliente.getCpf());
             rs = ps.executeQuery();
-            if(rs.next()){
-                compra = new Compra(); 
-                compra.setId(rs.getLong("id"));
-                compra.setDataCompra(rs.getDate("datacompra"));
-            } else {
-                close();
-                throw new RuntimeException("Compra não encontrada!");
-            }
+            while(rs.next()){
+                String datacompra = rs.getString("datacompra");
+                String secao = rs.getString("nome"); 
+                compra.put(datacompra, secao); 
+            } 
+            
         } catch (SQLException e){
                 throw new RuntimeException("Erro " + e.getSQLState()
                                            + " ao atualizar o objeto: " 
@@ -134,9 +134,8 @@ public class CompraDAOImpl implements CompraDAO{
                                          + e.getMessage()); 
         } finally {
             close();
-            return compra; 
         } 
-        
+        return compra;
     }
     
     private void close() {

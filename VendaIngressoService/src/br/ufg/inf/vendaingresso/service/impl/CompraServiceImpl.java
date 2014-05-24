@@ -67,13 +67,9 @@ public class CompraServiceImpl implements CompraService {
      * @return
      */
     @Override
-    public Compra recuperarCompra(Cliente cliente, Funcionario funcionario){
-        Compra compra; 
-        
+    public Map<String, String> recuperarCompra(Cliente cliente, Funcionario funcionario){        
         validate(cliente, funcionario);
-        compra = compraDAO.getCompra(cliente, funcionario);
-        return compra;
-        
+        return compraDAO.getCompra(cliente, funcionario);        
     }
     
     /**

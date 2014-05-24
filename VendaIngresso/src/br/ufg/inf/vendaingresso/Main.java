@@ -43,11 +43,11 @@ public class Main {
         System.out.println("----------------------------- LOGIN --------------------------------");
         
         System.out.print("Login: ");
-        String login = scanner.next();
+        String login = scanner.nextLine();
         funcionario.setLogin(login);
         
         System.out.print("Senha: ");
-        String senha = scanner.next();
+        String senha = scanner.nextLine();
         funcionario.setSenha(senha);
         
         boolean controle = controleAcesso.login(funcionario);
@@ -113,12 +113,16 @@ public class Main {
             }
             case 6: {
                 logout();
+                break;
             }
             case 7: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                menuprincipal();
+                break;
         }
     }
     
@@ -156,12 +160,16 @@ public class Main {
             }
             case 5: {
                 logout();
+                break;
             }
             case 6: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                menuprincipal();
+                break;
         }
     }
     
@@ -185,15 +193,15 @@ public class Main {
         System.out.println(compra.recuperarAssentosDisponiveis(evento));
         
         System.out.print("Informe o CPF do funcionário: ");
-        String cpfFuncionario = scanner.next();
+        String cpfFuncionario = scanner.nextLine();
         funcionario.setCpf(cpfFuncionario);
         
         System.out.print("Informe o CPF do cliente: ");
-        String cpfCliente = scanner.next();
+        String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
         System.out.print("Informe a seção: ");
-        String secaoNome = scanner.next();
+        String secaoNome = scanner.nextLine();
         secao.setNome(secaoNome);
         
         compra.cadastrarCompra(cliente, funcionario, secao, evento);
@@ -211,11 +219,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o CPF do funcionário: ");
-        String cpfFuncionario = scanner.next();
+        String cpfFuncionario = scanner.nextLine();
         funcionario.setCpf(cpfFuncionario);
         
         System.out.print("Informe o CPF do cliente: ");
-        String cpfCliente = scanner.next();
+        String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
         compra.recuperarCompra(cliente, funcionario);
@@ -233,11 +241,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Informe o CPF do funcionário: ");
-        String cpfFuncionario = scanner.next();
+        String cpfFuncionario = scanner.nextLine();
         funcionario.setCpf(cpfFuncionario);
         
         System.out.print("Informe o CPF do cliente: ");
-        String cpfCliente = scanner.next();
+        String cpfCliente = scanner.nextLine();
         cliente.setCpf(cpfCliente);
         
         compra.cancelarCompra(cliente, funcionario);
@@ -254,11 +262,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Nome: ");
-        String nome = input.next();
+        String nome = input.nextLine();
         cliente.setNome(nome);
         
         System.out.print("CPF: ");
-        String cpf = input.next();
+        String cpf = input.nextLine();
         cliente.setCpf(cpf);
         
         clienteservice.cadastrarCliente(cliente);
@@ -298,13 +306,16 @@ public class Main {
             }
             case 4: {
                 logout();
+                break;
             }
             case 5: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
                 menuEventos();
+                break;
         }
         
     }
@@ -473,12 +484,16 @@ public class Main {
             }
             case 4: {
                 logout();
+                break;
             }
             case 5: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                retornarMenuPrincipal();
+                break;
         }
     }
     

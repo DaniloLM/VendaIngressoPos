@@ -31,8 +31,12 @@ public class SecaoServiceImpl implements SecaoService {
         if (secao == null || secao.equals("")){
             throw new SaveException("Seção não pode ser vazia.");
         } else {
-            if(evento == null || evento.equals("")){
+            if (evento == null || evento.equals("")){
                 throw new SaveException("Evento não pode ser vazio.");
+            } else{
+                if (secao.getNome() == null || secao.getNome().equals("")){
+                    throw new SaveException("Nome seção não pode ser vazio.");
+                }
             }
         } 
     }

@@ -437,15 +437,15 @@ public class Main {
         funcionario.setCpf(cpf);
         
         System.out.print("Login: ");
-        String login = input.next();
+        String login = input.nextLine();
         funcionario.setLogin(login);
         
         System.out.print("Senha: ");
-        String senha = input.next();
+        String senha = input.nextLine();
         funcionario.setSenha(senha);
         
         System.out.println("Cargo: ");
-        String cargo = input.next();
+        String cargo = input.nextLine();
         cargo = cargo.substring(0,1).toUpperCase().concat(cargo.substring(1));
         acesso.setTipo(cargo);
         
@@ -510,12 +510,12 @@ public class Main {
         Scanner input = new Scanner(System.in);
         
         System.out.println("Informe o evento: ");
-        String nome = input.next();
+        String nome = input.nextLine();
         nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
         evento.setNome(nome);
         
         System.out.println("Informe a seção: ");
-        String nomesecao = input.next();
+        String nomesecao = input.nextLine();
         nomesecao = nomesecao.substring(0,1).toUpperCase().concat(nomesecao.substring(1));
         secao.setNome(nomesecao);
         
@@ -529,7 +529,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         
         System.out.println("Informe o evento: ");
-        String nome = input.next();
+        String nome = input.nextLine();
         nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
         evento.setNome(nome);
         

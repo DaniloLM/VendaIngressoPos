@@ -60,17 +60,23 @@ public class IngressoDAOImpl implements IngressoDAO{
      * Metodo para atualizar o idcompra do ingresso quando uma compra for realizada
      * 
      * @param cliente
+     * @param secao
+     * @param evento
      */
     @Override
-    public void atualizar(Cliente cliente){
+    public void atualizar(Cliente cliente, Secao secao, Evento evento){
         try {
             conn = ConnectionFactory.getConnection();
             String sql = "UPDATE ingresso SET idcompra = (SELECT compra.id "
-                                                         + "FROM compra "
-                                                         + "JOIN cliente ON compra.idcliente = cliente.id "
-                                                        + "WHERE cliente.cpf LIKE ?)";
+                                                        +  "FROM compra JOIN cliente ON compra.idcliente = cliente.id " 
+                                                        + "WHERE cliente.cpf LIKE ?) WHERE idsecao = (SELECT secao.id "
+                                                                                                     + "FROM secao " 
+                                                                                                     + "JOIN evento ON secao.idevento = evento.id " 
+                                                                                                     +"WHERE secao.nome LIKE ? AND evento.nome LIKE ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
+            ps.setString(2, secao.getNome());
+            ps.setString(3, evento.getNome());
             ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException("Erro " + e.getSQLState()

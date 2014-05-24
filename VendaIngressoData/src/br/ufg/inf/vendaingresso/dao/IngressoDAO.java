@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public interface IngressoDAO {
     public void salvar(Secao secao, Evento evento);
-    public void atualizar(Cliente cliente);
+    public void atualizar(Cliente cliente, Secao secao, Evento evento);
     public int getVendidosTotal();
     public int getVendidosSecao(Secao secao, Evento evento);
     public int getVendidosEvento(Evento evento);

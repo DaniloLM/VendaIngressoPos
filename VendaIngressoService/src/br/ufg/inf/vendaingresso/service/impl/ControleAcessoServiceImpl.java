@@ -27,7 +27,6 @@ public class ControleAcessoServiceImpl implements ControleAcessoService {
 
     @Override
     public boolean verificaAcesso(Funcionario funcionario) {
-        validate(funcionario);
         return controleacessoDAO.verificaAcesso(funcionario);
     }
     

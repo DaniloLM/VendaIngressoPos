@@ -112,12 +112,16 @@ public class Main {
             }
             case 6: {
                 logout();
+                break;
             }
             case 7: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                menuprincipal();
+                break;
         }
     }
     
@@ -155,12 +159,16 @@ public class Main {
             }
             case 5: {
                 logout();
+                break;
             }
             case 6: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                menuprincipal();
+                break;
         }
     }
     
@@ -269,12 +277,16 @@ public class Main {
             }
             case 3: {
                 logout();
+                break;
             }
             case 4: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                menuprincipal();
+                break;
         }
     }
     
@@ -333,13 +345,16 @@ public class Main {
             }
             case 4: {
                 logout();
+                break;
             }
             case 5: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
                 menuEventos();
+                break;
         }
         
     }
@@ -469,12 +484,16 @@ public class Main {
             }
             case 3: {
                 logout();
+                break;
             }
             case 4: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                retornarMenuPrincipal();
+                break;
         }
     }
     
@@ -545,12 +564,16 @@ public class Main {
             }
             case 4: {
                 logout();
+                break;
             }
             case 5: {
                 sair();
+                break;
             }
             default:
                 System.out.println("Opção inválida!");
+                retornarMenuPrincipal();
+                break;
         }
     }
     

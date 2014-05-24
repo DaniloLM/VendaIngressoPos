@@ -22,6 +22,7 @@ public class EventoServiceImpl implements EventoService{
     public void cadastrarEvento(Evento evento) {
         validate(evento);
         eventoDAO.salvar(evento);
+        System.out.println("Evento inserido com sucesso!");
     }
     
     public void validate(Evento evento){

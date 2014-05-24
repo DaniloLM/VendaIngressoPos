@@ -25,6 +25,7 @@ public class SecaoServiceImpl implements SecaoService {
     public void cadastrarSecao(Secao secao, Evento evento) {
         validate(secao, evento);
         secaoDAO.salvar(secao, evento);
+        System.out.println("Seção inserida com sucesso!");
     }
    
      public void validate(Secao secao, Evento evento){

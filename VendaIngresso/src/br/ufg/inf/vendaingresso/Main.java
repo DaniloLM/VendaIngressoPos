@@ -16,13 +16,7 @@ import br.ufg.inf.vendaingresso.service.impl.FuncionarioServiceImpl;
 import br.ufg.inf.vendaingresso.service.impl.IngressoServiceImpl;
 import br.ufg.inf.vendaingresso.service.impl.RelatorioServiceImpl;
 import br.ufg.inf.vendaingresso.service.impl.SecaoServiceImpl;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {     
 

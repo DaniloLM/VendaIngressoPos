@@ -289,11 +289,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
         
         System.out.print("Nome: ");
-        String nome = input.next();
+        String nome = input.nextLine();
         cliente.setNome(nome);
         
         System.out.print("CPF: ");
-        String cpf = input.next();
+        String cpf = input.nextLine();
         cliente.setCpf(cpf);
         
         clienteservice.cadastrarCliente(cliente);
